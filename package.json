@@ -1,0 +1,19 @@
+{
+  "name": "reminderbot_v2",
+  "version": "1.2.0",
+  "description": "reminder bot for facebook",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JenyaYeskov/ReminderBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JenyaYeskov/ReminderBot/issues"
+  },
+  "homepage": "https://github.com/JenyaYeskov/ReminderBot#readme"
+}
