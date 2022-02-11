@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-
 class DB {
 
     constructor(name) {
