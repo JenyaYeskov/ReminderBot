@@ -2,10 +2,12 @@
   "name": "reminderbot_v2",
   "version": "1.2.0",
   "description": "reminder bot for facebook",
-  "main": "index.js",
+  "type": "module",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "node app.js"
+    "run": "node app.js",
+    "nodemon": "nodemon run"
   },
   "repository": {
     "type": "git",
