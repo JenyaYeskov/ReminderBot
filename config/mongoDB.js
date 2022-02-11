@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import DB from "./db.js";
+import {DB} from "./db.js";
 
 export class MongoDB extends DB {
     constructor(name, uri) {

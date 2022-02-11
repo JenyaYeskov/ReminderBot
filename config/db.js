@@ -1,4 +1,4 @@
-class DB {
+export class DB {
 
     constructor(name) {
         this.name = name;
@@ -9,4 +9,4 @@ class DB {
     }
 }
 
-export default DB;
+// export default DB;
