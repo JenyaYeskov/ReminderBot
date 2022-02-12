@@ -1,7 +1,7 @@
 import express from "express";
 // import reminderController from "../controllers/reminderController";
 import reminderRoutes from "./reminderRoutes.js";
-import controlRoutes from "./coontolRoutes.js";
+import controlRoutes from "./contolRoutes.js";
 
 const router = express.Router();
 
