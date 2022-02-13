@@ -1,5 +1,4 @@
 import express from "express";
-// import reminderController from "../controllers/reminderController";
 import reminderRoutes from "./reminderRoutes.js";
 import controlRoutes from "./contolRoutes.js";
 
