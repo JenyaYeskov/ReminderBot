@@ -33,7 +33,6 @@ class ReminderService {
             return Reminder.deleteMany({"messenger user id": data["messenger user id"]});
         }
         else return "Invalid input"
-
     }
 
     async acceptOrSnoozeReminder(data) {
