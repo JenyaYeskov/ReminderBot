@@ -15,7 +15,10 @@ class ReminderService {
 
     async createReminder(data) {
         const reminder = await new Reminder({...data});
-        reminder.save();
+        reminder.userReminderId = getNewId();                    // TODO
+
+        await reminder.save();
+
         console.log(reminder);
         return reminder;
     }
