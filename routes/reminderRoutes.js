@@ -3,7 +3,7 @@ import reminderController from "../controllers/reminderController.js";
 
 const router = express.Router();
 
-router.get('/getRems', reminderController.getReminders);
+router.post('/getRems', reminderController.getReminders);
 
 router.post('/addRem', reminderController.createReminder);
 

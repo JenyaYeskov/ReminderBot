@@ -1,17 +1,36 @@
-
+import reminderService from "../models/reminderService.js";
 class ReminderController {
 
     async getReminders(req, res) {
-        console.log("dfgbdfbdsfb")
-        res.send("ffu")
+        try {
+            const reminders = await reminderService.getReminder(req.body);
+            res.send(reminders);
+        } catch (e) {
+            console.error(e.message);
+            res.status(500).send(e.message);
+        }
+
     }
 
     async createReminder(req, res) {
-        console.log("dfgbdfbdsfb")
+        try {
+            const reminder = await reminderService.createReminder(req.body);
+            res.send(reminder);
+        } catch (e) {
+            console.error(e.message);
+            res.status(500).send(e.message);
+        }
+
     }
 
      async deleteReminder(req, res) {
-
+         try {
+             const reminder = await reminderService.deleteReminder(req.body);
+             res.send(reminder);
+         } catch (e) {
+             console.error(e.message);
+             res.status(500).send(e.message);
+         }
     }
 
 }

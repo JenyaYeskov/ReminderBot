@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
-const reminderSchema = new mongoose.Schema({
+const ReminderSchema = new mongoose.Schema({
     userReminderId: Number,
-    messengerId: String,
+    "messenger user id": String,
     date: String,
     time: String,
     event: String,
     timeInUTC: String
 });
 
-export default mongoose.model('test', reminderSchema);
+export default mongoose.model('test', ReminderSchema);
