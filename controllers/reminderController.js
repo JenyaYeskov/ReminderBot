@@ -3,7 +3,7 @@ class ReminderController {
 
     async getReminders(req, res) {
         try {
-            const reminders = await reminderService.getReminder(req.body);
+            const reminders = await reminderService.getReminders(req.body);
             res.send(reminders);
         } catch (e) {
             console.error(e.message);
