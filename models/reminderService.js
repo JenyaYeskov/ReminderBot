@@ -1,4 +1,3 @@
-// import Reminder from "./reminderSchema.js";
 import reminderDB from "./mongoWithMongooseDB.js";
 
 class ReminderService {

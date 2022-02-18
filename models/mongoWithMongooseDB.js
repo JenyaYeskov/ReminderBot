@@ -1,4 +1,4 @@
-import Reminder from "./reminderSchema.js";
+import Reminder from "./mongooseReminderSchema.js";
 
 class mongoWithMongooseDB {
     async find(data) {

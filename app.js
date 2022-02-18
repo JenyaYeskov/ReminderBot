@@ -1,10 +1,8 @@
 import "dotenv/config";
 import express from "express";
 import bodyParser from "body-parser";
-// import router from "./routes/indexRoutes.js";
 import {MongoDB} from "./config/mongoDB.js";
 import router from "./routes/indexRoutes.js";
-// import Reminder from "./models/reminderSchema.js";
 
 const port = process.env.PORT || 58588;
 const app = express();
