@@ -12,12 +12,11 @@ class ReminderService {
     }
 
     async createReminder(data) {
-        const reminder = await new Reminder({...data});
-        reminder.userReminderId = await this.getNewId(data["messenger user id"]);
+        data.userReminderId = await this.getNewId(data["messenger user id"]);
 
+        const reminder = await new Reminder({...data});
         await reminder.save();
 
-        console.log(reminder);
         return reminder;
     }
 
@@ -27,7 +26,7 @@ class ReminderService {
 
         let id = 1;
 
-        while (existingIDs.includes(id)){
+        while (existingIDs.includes(id)) {
             id += 1;
         }
 
@@ -41,11 +40,9 @@ class ReminderService {
                 userReminderId: data.userReminderId,
                 "messenger user id": data["messenger user id"]
             });
-        }
-        else if (data.amount.toLowerCase() === "all") {
+        } else if (data.amount.toLowerCase() === "all") {
             return Reminder.deleteMany({"messenger user id": data["messenger user id"]});
-        }
-        else return "Invalid input"
+        } else return "Invalid input"
     }
 
     async acceptOrSnoozeReminder(data) {
