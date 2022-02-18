@@ -12,12 +12,12 @@ class mongoWithMongooseDB {
         return reminder;
     }
 
-   async findOneAndDelete(data) {
+    async findOneAndDelete(data) {
         return Reminder.findOneAndDelete(data);
     }
 
-    deleteMany(data) {
-
+    async deleteMany(data) {
+        return Reminder.deleteMany(data);
     }
 }
 
