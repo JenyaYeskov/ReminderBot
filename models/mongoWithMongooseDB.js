@@ -12,8 +12,8 @@ class mongoWithMongooseDB {
         return reminder;
     }
 
-    findOneAndDelete(data) {
-
+   async findOneAndDelete(data) {
+        return Reminder.findOneAndDelete(data);
     }
 
     deleteMany(data) {
