@@ -1,12 +1,13 @@
-import Reminder from "./reminderSchema.js";
+// import Reminder from "./reminderSchema.js";
+import reminderDB from "./mongoWithMongooseDB.js";
 
 class ReminderService {
 
     async getReminders(data) {
         if (data.amount.toLowerCase() === "todays") {
-            return Reminder.find({"messenger user id": data["messenger user id"]});  //TODO
+            return reminderDB.find({"messenger user id": data["messenger user id"]});  //TODO
         } else if (data.amount.toLowerCase() === "all") {
-            return Reminder.find({"messenger user id": data["messenger user id"]});
+            return reminderDB.find({"messenger user id": data["messenger user id"]});
         } else return "Invalid input"
 
     }
@@ -36,12 +37,12 @@ class ReminderService {
     async deleteReminder(data) {
 
         if (data.amount.toLowerCase() === ("one" || 1)) {
-            return Reminder.findOneAndDelete({
+            return reminderDB.findOneAndDelete({
                 userReminderId: data.userReminderId,
                 "messenger user id": data["messenger user id"]
             });
         } else if (data.amount.toLowerCase() === "all") {
-            return Reminder.deleteMany({"messenger user id": data["messenger user id"]});
+            return reminderDB.deleteMany({"messenger user id": data["messenger user id"]});
         } else return "Invalid input"
     }
 
