@@ -1,4 +1,4 @@
-import reminderDB from "./mongoWithMongooseDB.js";
+import reminderDB from "./mongoDbWithMongoose.js";
 
 class ReminderService {
 
@@ -31,7 +31,6 @@ class ReminderService {
     }
 
     async deleteReminder(data) {
-
         if (data.amount.toLowerCase() === ("one" || 1)) {
             return reminderDB.findOneAndDelete({
                 userReminderId: data.userReminderId,
