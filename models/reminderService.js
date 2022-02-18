@@ -5,9 +5,9 @@ class ReminderService {
 
     async getReminders(data) {
         if (data.amount.toLowerCase() === "todays") {
-            return reminderDB.find({"messenger user id": data["messenger user id"]});  //TODO
+            return await reminderDB.find({"messenger user id": data["messenger user id"]});  //TODO
         } else if (data.amount.toLowerCase() === "all") {
-            return reminderDB.find({"messenger user id": data["messenger user id"]});
+            return await reminderDB.find({"messenger user id": data["messenger user id"]});
         } else return "Invalid input"
 
     }
@@ -15,10 +15,7 @@ class ReminderService {
     async createReminder(data) {
         data.userReminderId = await this.getNewId(data["messenger user id"]);
 
-        const reminder = await new Reminder({...data});
-        await reminder.save();
-
-        return reminder;
+        return await reminderDB.createNew(data);
     }
 
     async getNewId(messengerId) {

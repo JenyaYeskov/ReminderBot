@@ -5,8 +5,11 @@ class mongoWithMongooseDB {
         return Reminder.find(data);
     }
 
-    createNew(data) {
+    async createNew(data) {
+        const reminder = await new Reminder({...data});
+        await reminder.save();
 
+        return reminder;
     }
 
     findOneAndDelete(data) {
