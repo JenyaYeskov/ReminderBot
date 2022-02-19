@@ -1,4 +1,10 @@
 import reminderDB from "./mongoDbWithMongoose.js";
+import DateAndTime from "date-and-time"
+
+const dateAndTimePatterns = ['DD.MM.YYYY HH.mm', 'D.MM.YYYY HH.mm', 'DD.MM.YYYY H.mm',
+    'D.MM.YYYY H.mm', 'DD.MM.YY HH.mm', 'D.MM.YY HH.mm', 'DD.MM.YY H.mm', 'D.MM.YY H.mm',
+    'DD.M.YYYY HH.mm', 'D.M.YYYY HH.mm', 'DD.M.YYYY H.mm', 'D.M.YYYY H.mm', 'DD.M.YY HH.mm',
+    'D.M.YY HH.mm', 'DD.M.YY H.mm', 'D.M.YY H.mm'];
 
 class ReminderService {
 
@@ -11,8 +17,20 @@ class ReminderService {
 
     }
 
+    async getTime(date, time, offset) {
+
+        for (const pattern of dateAndTimePatterns) {
+            if (DateAndTime.isValid(`${date} ${time} ${this.defineOffset(offset)}`, pattern)) {
+
+            }
+        }
+
+    }
+
     async createReminder(data) {
         data.userReminderId = await this.getNewId(data["messenger user id"]);
+        data.timeInUTC = await this.getTime(data.date, data.time, data.timezone);
+
 
         return await reminderDB.createNew(data);
     }
@@ -44,7 +62,10 @@ class ReminderService {
     async acceptOrSnoozeReminder(data) {
 
     }
+
+    defineOffset(offset) {
+
+    }
 }
 
 export default new ReminderService();
-
