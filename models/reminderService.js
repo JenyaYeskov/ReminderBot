@@ -21,14 +21,15 @@ class ReminderService {
         for (const pattern of dateAndTimePatterns) {
             let timeString = `${date}T${time} ${this.formatOffset(offset)}`;
 
+            if (DateAndTime.isValid(timeString, `${pattern} Z`)) {
+                return DateAndTime.parse(timeString, `${pattern} Z`);
             }
         }
     }
 
     async createReminder(data) {
         data.userReminderId = await this.getNewId(data["messenger user id"]);
-        data.timeInUTC = await this.getTime(data.date, data.time, data.timezone);
-
+        data.time = await this.getTime(data.dateInput, data.timeInput, data.timezone);
 
         return await reminderDB.createNew(data);
     }
