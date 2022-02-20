@@ -3,10 +3,10 @@ import mongoose from "mongoose";
 const ReminderSchema = new mongoose.Schema({
     userReminderId: Number,
     "messenger user id": String,
-    date: String,
-    time: String,
+    dateInput: String,
+    timeInput: String,
     event: String,
-    timeInUTC: String
+    time: Date
 });
 
 export default mongoose.model('test', ReminderSchema);
