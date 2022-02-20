@@ -17,7 +17,7 @@ class ReminderService {
 
     }
 
-    async getTime(date, time, offset) {
+    async getReminderTime(date, time, offset) {
         for (const pattern of dateAndTimePatterns) {
             let timeString = `${date}T${time} ${this.formatOffset(offset)}`;
 
@@ -29,7 +29,7 @@ class ReminderService {
 
     async createReminder(data) {
         data.userReminderId = await this.getNewId(data["messenger user id"]);
-        data.time = await this.getTime(data.dateInput, data.timeInput, data.timezone);
+        data.time = await this.getReminderTime(data.dateInput, data.timeInput, data.timezone);
 
         return await reminderDB.createNew(data);
     }
