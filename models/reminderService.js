@@ -18,13 +18,11 @@ class ReminderService {
     }
 
     async getTime(date, time, offset) {
-
         for (const pattern of dateAndTimePatterns) {
-            if (DateAndTime.isValid(`${date} ${time} ${this.defineOffset(offset)}`, pattern)) {
+            let timeString = `${date}T${time} ${this.formatOffset(offset)}`;
 
             }
         }
-
     }
 
     async createReminder(data) {
@@ -63,8 +61,33 @@ class ReminderService {
 
     }
 
-    defineOffset(offset) {
+    formatOffset(offset) {
+        const separators = [".", ":", "/"];
 
+        for (const separator of separators) {
+            if (offset.includes(separator)) {
+                offset = offset.split(separator).join("");
+                break;
+            }
+        }
+
+        let sign;
+        if (offset >= 0) {
+            sign = "+";
+        } else {
+            sign = "-";
+            offset = offset.slice(1);
+        }
+
+        if (offset.length === 1) {
+            return `${sign}0${offset}00`
+        } else if (offset.length === 2) {
+            return `${sign}${offset}00`
+        } else if (offset.length === 3) {
+            return `${sign}0${offset}`
+        } else if (offset.length === 4) {
+            return `${sign}${offset}`
+        }
     }
 }
 
