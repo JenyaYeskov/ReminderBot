@@ -6,7 +6,12 @@ class ReminderService {
 
     async getReminders(data) {
         if (data.amount.toLowerCase() === "todays") {
-            return await reminderDB.find({"messenger user id": data["messenger user id"]});  //TODO
+            const today = new Date();
+
+            let reminders = await reminderDB.find({"messenger user id": data["messenger user id"]});
+            reminders = reminders.filter((reminder) => DateAndTime.isSameDay(today, reminder.time));
+
+            return reminders;
         } else if (data.amount.toLowerCase() === "all") {
             return await reminderDB.find({"messenger user id": data["messenger user id"]});
         } else return "Invalid input"
