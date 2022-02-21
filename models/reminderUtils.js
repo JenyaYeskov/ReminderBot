@@ -1,5 +1,8 @@
-import DateAndTime from "date-and-time";
 import reminderService from "./reminderService.js";
+import DateAndTime from "date-and-time";
+import two_digit_year from "date-and-time/plugin/two-digit-year";
+
+DateAndTime.plugin(two_digit_year);
 
 class ReminderUtils {
     dateAndTimePatterns = ['DD.MM.YYYY HH.mm', 'D.MM.YYYY HH.mm', 'DD.MM.YYYY H.mm',
