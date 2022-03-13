@@ -1,11 +1,15 @@
+import controlService from "../models/controlService.js";
+
 export const controlController = {
     start: (req, res) => {
-        console.log("started");
+        controlService.start();
+
         res.send("started")
     },
 
     stop: (req, res) => {
-        console.log("stopped");
+        controlService.stop();
+
         res.send("stopped")
     }
 
