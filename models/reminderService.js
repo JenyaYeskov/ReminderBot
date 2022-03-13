@@ -40,6 +40,16 @@ class ReminderService {
 
     }
 
+    checkReminder() {
+        const reminders = reminderDB.find();
+
+        for (const reminder of reminders) {
+            if (reminder.time >= new Date()) {
+                console.log("************");
+            }
+        }
+    }
+
 }
 
 export default new ReminderService();
