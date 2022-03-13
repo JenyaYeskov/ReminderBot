@@ -8,7 +8,7 @@ class controlService {
 
         interval = setInterval(() => {
             reminderService.checkReminder();
-        }, 60000);
+        }, 30000);
 
         console.log('started');
         return('started');

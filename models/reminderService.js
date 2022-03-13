@@ -40,12 +40,12 @@ class ReminderService {
 
     }
 
-    checkReminder() {
-        const reminders = reminderDB.find();
+    async checkReminder() {
+        const reminders = await reminderDB.find();
 
         for (const reminder of reminders) {
-            if (reminder.time >= new Date()) {
-                console.log("************");
+
+            if (reminder.time <= new Date()) {
             }
         }
     }
