@@ -9,6 +9,6 @@ router.post('/addRem', reminderController.createReminder);
 
 router.post('/delete', reminderController.deleteReminder);
 
-// router.post('/acceptOrSnooze', reminderController.acceptOrSnooze);
+router.post('/acceptOrSnooze', reminderController.acceptOrSnoozeReminder);
 
 export default router;
