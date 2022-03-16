@@ -33,6 +33,16 @@ class ReminderController {
          }
     }
 
+    async acceptOrSnoozeReminder(req, res) {
+        try {
+            const reminder = await reminderService.acceptOrSnoozeReminder(req.body);
+            res.send(reminder);
+        } catch (e) {
+            console.error(e.message);
+            res.status(500).send(e.message);
+        }
+    }
+
 }
 
 export default new ReminderController();
