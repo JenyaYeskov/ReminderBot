@@ -36,7 +36,24 @@ class ReminderService {
         } else return "Invalid input"
     }
 
-    async acceptOrSnoozeReminder(data) {
+    async checkReminder() {
+        const reminders = await reminderDB.getAll();
+
+        for (const reminder of reminders) {
+
+            if (reminder.time <= new Date()) {
+                await this.acceptOrSnoozeReminder({
+                    dbReminderId: reminder.id,
+                    acceptOrSnooze: "snooze",
+                    "messenger user id": ""
+                })
+            }
+        }
+    }
+
+    acceptOrSnoozeReminder(data) {
+        const {acceptOrSnooze} = data;
+        const {dbReminderId} = data;
 
     }
 
