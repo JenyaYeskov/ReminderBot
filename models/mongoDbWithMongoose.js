@@ -19,6 +19,10 @@ class mongoDbWithMongoose {
     async deleteMany(data) {
         return Reminder.deleteMany(data);
     }
+
+    async getAll() {
+        return this.find();
+    }
 }
 
 export default new mongoDbWithMongoose();
