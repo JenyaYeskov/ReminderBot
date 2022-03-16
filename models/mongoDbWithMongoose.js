@@ -23,6 +23,10 @@ class mongoDbWithMongoose {
     async getAll() {
         return this.find();
     }
+
+    async findByIdAndUpdate(id, data) {
+        return Reminder.findByIdAndUpdate(id, data);
+    }
 }
 
 export default new mongoDbWithMongoose();
