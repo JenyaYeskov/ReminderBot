@@ -76,16 +76,6 @@ class ReminderService {
         return "done   " + DBReminderID;
     }
 
-    async checkReminder() {
-        const reminders = await reminderDB.find();
-
-        for (const reminder of reminders) {
-
-            if (reminder.time <= new Date()) {
-            }
-        }
-    }
-
 }
 
 export default new ReminderService();
