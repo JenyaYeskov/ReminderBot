@@ -55,6 +55,25 @@ class ReminderService {
         const {acceptOrSnooze} = data;
         const {dbReminderId} = data;
 
+        if (acceptOrSnooze.toLowerCase() === 'accept') {
+            return (this.acceptReminder(dbReminderId));
+        } else if (acceptOrSnooze.toLowerCase() === 'snooze') {
+            return (this.snoozeReminder(dbReminderId));
+        }
+    }
+
+    async snoozeReminder(DBReminderID) {
+        const newTime = new Date();
+        newTime.setMinutes(newTime.getMinutes() + 10);
+
+        await reminderDB.findByIdAndUpdate(DBReminderID, {time: newTime});
+
+        return "snoozed";
+    }
+
+    async acceptReminder(DBReminderID) {
+        await reminderDB.findOneAndDelete({id: DBReminderID});
+        return "done   " + DBReminderID;
     }
 
     async checkReminder() {
