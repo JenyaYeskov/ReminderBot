@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.post('/getRems', reminderController.getReminders);
 
-router.post('/addRem', reminderController.createReminder);
+router.post('/addRem', reminderController.createReminder.bind(reminderController));
+// router.post('/addRem', reminderController.createReminder);
 
 router.post('/delete', reminderController.deleteReminder);
 
