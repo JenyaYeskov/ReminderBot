@@ -1,6 +1,7 @@
 import reminderDB from "./mongoDbWithMongoose.js";
 import DateAndTime from "date-and-time"
 import Utils from "./reminderUtils.js";
+import ApiError from "../Errors/apiError.js";
 
 class ReminderService {
 
