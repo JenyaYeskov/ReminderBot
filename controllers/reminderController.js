@@ -21,15 +21,8 @@ class ReminderController {
 
     }
 
-    async createReminder(req, res) {
-        try {
-            const reminder = await reminderService.createReminder(req.body);
-            res.send(reminder);
-        } catch (e) {
-            console.error(e.message);
-            res.status(500).send(e.message);
-        }
-
+    async createReminder(req, res, next) {
+        return this.handleRequest(reminderService.createReminder, req, res, next);
     }
 
      async deleteReminder(req, res) {
