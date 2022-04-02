@@ -21,6 +21,8 @@ app.use(errorHandler);
 async function start() {
     app.listen(port, () => console.log('Server is running'));
     await mongoConnection.connect();
+
+    controlService.start();
 }
 
 await start();
