@@ -1,5 +1,14 @@
 import reminderService from "../models/reminderService.js";
+
 class ReminderController {
+    async handleRequest(method, req, res, next) {
+        try {
+            const data = await method(req.body);
+            return res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
+    }
 
     async getReminders(req, res) {
         try {
