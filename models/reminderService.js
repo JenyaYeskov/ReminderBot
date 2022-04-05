@@ -41,11 +41,10 @@ class ReminderService {
         const reminders = await reminderDB.getAll();
 
         for (const reminder of reminders) {
-
             if (reminder.time <= new Date()) {
                 await this.acceptOrSnoozeReminder({
                     dbReminderId: reminder.id,
-                    acceptOrSnooze: "snooze",
+                    acceptOrSnooze: "accept",
                     "messenger user id": ""
                 })
             }
