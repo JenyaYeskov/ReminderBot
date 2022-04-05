@@ -10,41 +10,21 @@ class ReminderController {
         }
     }
 
-    async getReminders(req, res) {
-        try {
-            const reminders = await reminderService.getReminders(req.body);
-            res.send(reminders);
-        } catch (e) {
-            console.error(e.message);
-            res.status(500).send(e.message);
-        }
-
+    async getReminders(req, res, next) {
+        return this.handleRequest(reminderService.getReminders, req, res, next);
     }
 
     async createReminder(req, res, next) {
         return this.handleRequest(reminderService.createReminder, req, res, next);
     }
 
-     async deleteReminder(req, res) {
-         try {
-             const reminder = await reminderService.deleteReminder(req.body);
-             res.send(reminder);
-         } catch (e) {
-             console.error(e.message);
-             res.status(500).send(e.message);
-         }
+     async deleteReminder(req, res, next) {
+         return this.handleRequest(reminderService.deleteReminder, req, res, next);
     }
 
-    async acceptOrSnoozeReminder(req, res) {
-        try {
-            const reminder = await reminderService.acceptOrSnoozeReminder(req.body);
-            res.send(reminder);
-        } catch (e) {
-            console.error(e.message);
-            res.status(500).send(e.message);
-        }
+    async acceptOrSnoozeReminder(req, res, next) {
+        return this.handleRequest(reminderService.acceptOrSnoozeReminder, req, res, next);
     }
-
 }
 
 export default new ReminderController();
