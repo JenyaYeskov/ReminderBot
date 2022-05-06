@@ -7,8 +7,4 @@ const router = express.Router();
 router.use("/reminders", reminderRoutes);
 router.use("/control", controlRoutes);
 
-router.get('/', (req, res) => {
-    res.send('deployed');
-});
-
 export default router;
