@@ -3,10 +3,10 @@
   "version": "1.2.0",
   "description": "reminder bot for facebook",
   "type": "module",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "node app.js",
+    "run": "node server.js",
     "nodemon": "nodemon run"
   },
   "repository": {
