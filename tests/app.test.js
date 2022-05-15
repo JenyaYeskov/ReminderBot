@@ -124,6 +124,7 @@ describe("Reminder routes testing", () => {
     });
 
     describe("/reminders/delete route tests", () => {
+
         it("should delete all user's reminders from db", async () => {
 
             for (let i = 0; i < 3; i++) {
@@ -143,6 +144,32 @@ describe("Reminder routes testing", () => {
             })
 
             expect(response.body.length).toBe(0)
+        });
+
+        it("should delete only one reminder from db by id", async () => {
+
+            for (let i = 0; i < 3; i++) {
+                await supertest(app).post("/reminders/addRem").send(reminderInfo);
+            }
+
+            let response = await supertest(app).post("/reminders/delete").send({
+                "userReminderId": "2",
+                "messenger user id": "1844369452275489",
+                "amount": "one"
+            })
+
+            expect(response.body.userReminderId).toBe(2);
+
+            response = await supertest(app).post("/reminders/getRems").send({
+                "amount": "all",
+                "messenger user id": "1844369452275489"
+            })
+
+            expect(response.body.length).toBe(2)
+
+            for (const reminder of response.body) {
+                expect(response.userReminderId).not.toBe(2);
+            }
         });
     });
 
