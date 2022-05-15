@@ -4,7 +4,12 @@ class ReminderController {
     async handleRequest(method, req, res, next) {
         try {
             const data = await method(req.body);
-            return res.status(200).send(data);
+
+            if (data.statusCode){
+                res.status(data.statusCode);
+            }
+
+            return res.send(data);
         } catch (err) {
             next(err);
         }
