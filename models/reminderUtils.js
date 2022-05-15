@@ -1,6 +1,7 @@
 import reminderService from "./reminderService.js";
 import DateAndTime from "date-and-time";
 import two_digit_year from "date-and-time/plugin/two-digit-year";
+import ApiError from "../Errors/apiError.js";
 
 DateAndTime.plugin(two_digit_year);
 
@@ -11,13 +12,18 @@ class ReminderUtils {
         'D.M.YY HH.mm', 'DD.M.YY H.mm', 'D.M.YY H.mm'];
 
     async getReminderTime(date, time, offset) {
+        let result;
+
         for (const pattern of this.dateAndTimePatterns) {
             let timeString = `${date}T${time} ${this.formatOffset(offset)}`;
 
             if (DateAndTime.isValid(timeString, `${pattern} Z`)) {
-                return DateAndTime.parse(timeString, `${pattern} Z`);
+                result = DateAndTime.parse(timeString, `${pattern} Z`);
             }
         }
+        if (result){
+            return result;
+        } else throw new ApiError(400, "Wrong date or time.")
     }
 
     formatOffset(offset) {
