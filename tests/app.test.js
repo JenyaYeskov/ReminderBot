@@ -72,7 +72,7 @@ describe("Reminder routes testing", () => {
             for (let i = 0; i < response.body.length; i++) {
                 expect(response.body[i]).toEqual({
                     "_id": expect.any(String),
-                    "userReminderId": i + 1 ,
+                    "userReminderId": i + 1,
                     "messenger user id": "1844369452275489",
                     "dateInput": "23.03.22",
                     "timeInput": "05.10",
@@ -108,7 +108,7 @@ describe("Reminder routes testing", () => {
 
                 expect(response.body[i]).toEqual({
                     "_id": expect.any(String),
-                    "userReminderId": id ,
+                    "userReminderId": id,
                     "messenger user id": "1844369452275489",
                     "dateInput": `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`,
                     "timeInput": "05.10",
@@ -123,26 +123,27 @@ describe("Reminder routes testing", () => {
         });
     });
 
-    // describe("/reminders/delete route tests", () => {
-    //     it("should return status code 200 ", async () => {
-    //         const response = await supertest(app).post("/reminders/getRems").send({
-    //             "amount": "all",
-    //             "messenger user id": "1844369452275489"
-    //         })
-    //
-    //         expect(response.statusCode).toBe(200);
-    //     });
-    //
-    //     it.skip("should return ", async () => {
-    //
-    //
-    //         const response = await supertest(app).post("/reminders/getRems").send({
-    //             "amount": "all",
-    //             "messenger user id": "1844369452275489"
-    //         })
-    //
-    //         expect(response.statusCode).toBe(200);
-    //     });
-    // });
+    describe("/reminders/delete route tests", () => {
+        it("should delete all user's reminders from db", async () => {
+
+            for (let i = 0; i < 3; i++) {
+                await supertest(app).post("/reminders/addRem").send(reminderInfo);
+            }
+
+            let response = await supertest(app).post("/reminders/delete").send({
+                "messenger user id": "1844369452275489",
+                "amount": "all"
+            })
+
+            expect(response.body.deletedCount).toBe(3);
+
+            response = await supertest(app).post("/reminders/getRems").send({
+                "amount": "all",
+                "messenger user id": "1844369452275489"
+            })
+
+            expect(response.body.length).toBe(0)
+        });
+    });
 
 })
