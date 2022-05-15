@@ -10,7 +10,6 @@ import controlService from "./models/controlService.js";
 import ApiError from "./Errors/apiError.js";
 
 
-// const port = process.env.PORT || 58588;
 const app = express();
 const mongoConnection = new MongoDB("mongo connection 1", process.env.MONGO_URI)
 
@@ -25,10 +24,9 @@ app.use(errorHandler);
 
 
 async function start() {
-    // app.listen(port, () => console.log('Server is running'));
     await mongoConnection.connect();
 
-    controlService.start();
+    // controlService.start();
 }
 
 await start();
