@@ -12,7 +12,7 @@ let reminderInfo = {
 }
 
 beforeAll(async () => {
-    const mongoConnection = new MongooseConnection("mongo testing connection", process.env.MONGO_URI);
+    const mongoConnection = new MongooseConnection("mongo testing connection", process.env.MONGO_TEST_URI);
 
     try {
         await mongoConnection.connect();
