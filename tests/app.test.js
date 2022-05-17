@@ -1,5 +1,7 @@
 import supertest from "supertest";
 import app from "../app.js";
+import mongoose from "mongoose";
+import {MongooseConnection} from "../config/mongooseConnection.js";
 
 let reminderInfo = {
     "dateInput": "23.03.22",
@@ -9,12 +11,26 @@ let reminderInfo = {
     "event": "do something"
 }
 
+beforeAll(async () => {
+    const mongoConnection = new MongooseConnection("mongo testing connection", process.env.MONGO_URI);
+
+    try {
+        await mongoConnection.connect();
+    } catch (e) {
+        console.error(e);
+    }
+})
+
 beforeEach(async () => {
     await supertest(app).post("/reminders/delete").send({
         "userReminderId": "",
         "messenger user id": "1844369452275489",
         "amount": "all"
     })
+})
+
+afterAll(async () => {
+    await mongoose.connection.close()
 })
 
 describe("Reminder routes testing", () => {
