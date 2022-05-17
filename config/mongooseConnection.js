@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import {DB} from "./db.js";
 import {applyHooks} from "./hooks.js";
 
-export class MongoDB extends DB {
+export class MongooseConnection extends DB {
     constructor(name, uri) {
         super(name);
         this.uri = uri;
@@ -14,7 +14,6 @@ export class MongoDB extends DB {
 
             if (!this.connection) {
                 this.connection = await mongoose.connect(this.uri);
-
             }
 
             return this.connection;
