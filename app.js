@@ -1,18 +1,13 @@
 import "dotenv/config";
 import express from "express";
 import bodyParser from "body-parser";
-import {MongoDB} from "./config/mongoDB.js";
 import router from "./routes/indexRoutes.js";
-
 import errorHandler from "./Errors/errorHandler.js";
-
-import controlService from "./models/controlService.js";
 import ApiError from "./Errors/apiError.js";
 
+import controlService from "./models/controlService.js";
 
 const app = express();
-const mongoConnection = new MongoDB("mongo connection 1", process.env.MONGO_URI)
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -24,8 +19,6 @@ app.use(errorHandler);
 
 
 async function start() {
-    await mongoConnection.connect();
-
     // controlService.start();
 }
 
