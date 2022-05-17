@@ -5,7 +5,7 @@ import {MongooseConnection} from "../config/mongooseConnection.js";
 
 let reminderInfo = {
     "dateInput": "23.03.22",
-    "messenger user id": "1844369452275489",
+    "messenger user id": process.env.fbMessengerId,
     "timeInput": "05.10",
     "timezone": "2",
     "event": "do something"
@@ -24,7 +24,7 @@ beforeAll(async () => {
 beforeEach(async () => {
     await supertest(app).post("/reminders/delete").send({
         "userReminderId": "",
-        "messenger user id": "1844369452275489",
+        "messenger user id": process.env.fbMessengerId,
         "amount": "all"
     })
 })
@@ -49,7 +49,7 @@ describe("Reminder routes testing", () => {
 
             expect(response.body).toEqual({
                 "userReminderId": expect.any(Number),
-                "messenger user id": "1844369452275489",
+                "messenger user id": process.env.fbMessengerId,
                 "dateInput": "23.03.22",
                 "timeInput": "05.10",
                 "event": "do something",
@@ -66,7 +66,7 @@ describe("Reminder routes testing", () => {
         it("should return status code 200 ", async () => {
             const response = await supertest(app).post("/reminders/getRems").send({
                 "amount": "all",
-                "messenger user id": "1844369452275489"
+                "messenger user id": process.env.fbMessengerId
             })
 
             expect(response.statusCode).toBe(200);
@@ -80,7 +80,7 @@ describe("Reminder routes testing", () => {
 
             const response = await supertest(app).post("/reminders/getRems").send({
                 "amount": "all",
-                "messenger user id": "1844369452275489"
+                "messenger user id": process.env.fbMessengerId
             })
 
             expect(response.body.length).toBe(3);
@@ -89,7 +89,7 @@ describe("Reminder routes testing", () => {
                 expect(response.body[i]).toEqual({
                     "_id": expect.any(String),
                     "userReminderId": i + 1,
-                    "messenger user id": "1844369452275489",
+                    "messenger user id": process.env.fbMessengerId,
                     "dateInput": "23.03.22",
                     "timeInput": "05.10",
                     "event": "do something",
@@ -113,7 +113,7 @@ describe("Reminder routes testing", () => {
 
             const response = await supertest(app).post("/reminders/getRems").send({
                 "amount": "todays",
-                "messenger user id": "1844369452275489"
+                "messenger user id": process.env.fbMessengerId
             })
 
             expect(response.body.length).toBe(3);
@@ -125,7 +125,7 @@ describe("Reminder routes testing", () => {
                 expect(response.body[i]).toEqual({
                     "_id": expect.any(String),
                     "userReminderId": id,
-                    "messenger user id": "1844369452275489",
+                    "messenger user id": process.env.fbMessengerId,
                     "dateInput": `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`,
                     "timeInput": "05.10",
                     "event": "do something",
@@ -148,7 +148,7 @@ describe("Reminder routes testing", () => {
             }
 
             let response = await supertest(app).post("/reminders/delete").send({
-                "messenger user id": "1844369452275489",
+                "messenger user id": process.env.fbMessengerId,
                 "amount": "all"
             })
 
@@ -156,7 +156,7 @@ describe("Reminder routes testing", () => {
 
             response = await supertest(app).post("/reminders/getRems").send({
                 "amount": "all",
-                "messenger user id": "1844369452275489"
+                "messenger user id": process.env.fbMessengerId
             })
 
             expect(response.body.length).toBe(0)
@@ -170,7 +170,7 @@ describe("Reminder routes testing", () => {
 
             let response = await supertest(app).post("/reminders/delete").send({
                 "userReminderId": "2",
-                "messenger user id": "1844369452275489",
+                "messenger user id": process.env.fbMessengerId,
                 "amount": "one"
             })
 
@@ -178,7 +178,7 @@ describe("Reminder routes testing", () => {
 
             response = await supertest(app).post("/reminders/getRems").send({
                 "amount": "all",
-                "messenger user id": "1844369452275489"
+                "messenger user id": process.env.fbMessengerId
             })
 
             expect(response.body.length).toBe(2)
