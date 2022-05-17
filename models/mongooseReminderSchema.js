@@ -9,4 +9,4 @@ const ReminderSchema = new mongoose.Schema({
     time: Date
 });
 
-export default mongoose.model('test', ReminderSchema);
+export default mongoose.model('reminders', ReminderSchema);
