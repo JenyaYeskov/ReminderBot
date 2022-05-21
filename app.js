@@ -19,7 +19,7 @@ app.use(errorHandler);
 
 
 async function start() {
-    // controlService.start();
+    controlService.start();
 }
 
 await start();

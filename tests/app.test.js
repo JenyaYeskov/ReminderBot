@@ -33,7 +33,7 @@ afterAll(async () => {
     await mongoose.connection.close()
 })
 
-describe("Reminder routes testing", () => {
+describe.skip("Reminder routes testing", () => {
 
     describe("/reminders/addRem route tests", () => {
 
