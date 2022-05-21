@@ -56,7 +56,8 @@ class ReminderUtils {
     }
 
     async getNewId(messengerId) {
-        const reminders = await reminderService.getReminders({"messenger user id": messengerId, amount: "all"});
+        let reminders = await reminderService.getReminders({"messenger user id": messengerId, amount: "all"});
+        reminders = Array.from(reminders)
         const existingIDs = reminders.map((reminder) => reminder.userReminderId);
 
         let id = 1;
