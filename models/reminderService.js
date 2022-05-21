@@ -69,14 +69,13 @@ class ReminderService {
         const newTime = new Date();
         newTime.setMinutes(newTime.getMinutes() + 10);
 
-        await reminderDB.findByIdAndUpdate(DBReminderID, {time: newTime});
-
-        return "snoozed";
+        const snoozedReminder = await reminderDB.findByIdAndUpdate(DBReminderID, {time: newTime});
+        return `Reminder "${snoozedReminder.event}" will show up in 10 minutes.`;
     }
 
     async acceptReminder(DBReminderID) {
-        await reminderDB.findOneAndDelete({id: DBReminderID});
-        return "done   " + DBReminderID;
+        const deletedReminder = await reminderDB.findOneAndDelete({id: DBReminderID});
+        return `Reminder "${deletedReminder.event}" was deleted.`;
     }
 
 }
