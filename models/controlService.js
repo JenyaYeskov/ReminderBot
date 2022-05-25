@@ -3,12 +3,12 @@ import reminderService from "./reminderService.js";
 let interval;
 
 class controlService {
-    start() {
+    start(time = 60000) {
         clearInterval(interval);
 
-        interval = setInterval(() => {
-            reminderService.checkReminder();
-        }, 10000);
+        interval = setInterval(async () => {
+            await reminderService.checkReminder();
+        }, time);
 
         console.log('started');
         return('started');
