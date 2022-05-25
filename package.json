@@ -3,10 +3,10 @@
   "version": "1.2.0",
   "description": "reminder bot for facebook",
   "type": "module",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "node app.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "run": "node server.js",
     "nodemon": "nodemon run"
   },
   "repository": {
@@ -26,5 +26,10 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "mongoose": "^6.2.1"
+  },
+  "devDependencies": {
+    "@jest/globals": "^28.1.0",
+    "jest": "^28.1.0",
+    "supertest": "^6.2.3"
   }
 }

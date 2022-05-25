@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import {DB} from "./db.js";
+import {applyHooks} from "./hooks.js";
 
-export class MongoDB extends DB {
+export class MongooseConnection extends DB {
     constructor(name, uri) {
         super(name);
         this.uri = uri;
@@ -9,11 +10,12 @@ export class MongoDB extends DB {
 
     async connect() {
         try {
+            applyHooks(mongoose.connection, this)
+
             if (!this.connection) {
                 this.connection = await mongoose.connect(this.uri);
             }
 
-            console.log(`Connected to ${this.name}`);
             return this.connection;
         } catch (e) {
             console.error(e);

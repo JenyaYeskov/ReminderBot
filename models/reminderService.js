@@ -23,7 +23,10 @@ class ReminderService {
         data.userReminderId = await Utils.getNewId(data["messenger user id"]);
         data.time = await Utils.getReminderTime(data.dateInput, data.timeInput, data.timezone);
 
-        return await reminderDB.createNew(data);
+        const result = await reminderDB.createNew(data);
+        result.statusCode = 201;
+
+        return result;
     }
 
     async deleteReminder(data) {
@@ -66,14 +69,13 @@ class ReminderService {
         const newTime = new Date();
         newTime.setMinutes(newTime.getMinutes() + 10);
 
-        await reminderDB.findByIdAndUpdate(DBReminderID, {time: newTime});
-
-        return "snoozed";
+        const snoozedReminder = await reminderDB.findByIdAndUpdate(DBReminderID, {time: newTime});
+        return `Reminder "${snoozedReminder.event}" will show up in 10 minutes.`;
     }
 
     async acceptReminder(DBReminderID) {
-        await reminderDB.findOneAndDelete({id: DBReminderID});
-        return "done   " + DBReminderID;
+        const deletedReminder = await reminderDB.findOneAndDelete({id: DBReminderID});
+        return `Reminder "${deletedReminder.event}" was deleted.`;
     }
 
 }
