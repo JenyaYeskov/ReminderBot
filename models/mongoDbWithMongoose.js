@@ -2,7 +2,7 @@ import Reminder from "./mongooseReminderSchema.js";
 
 class mongoDbWithMongoose {
     async find(data) {
-        return Reminder.find(data);
+        return Reminder.find(data).lean();
     }
 
     async createNew(data) {
@@ -13,11 +13,11 @@ class mongoDbWithMongoose {
     }
 
     async findOneAndDelete(data) {
-        return Reminder.findOneAndDelete(data);
+        return Reminder.findOneAndDelete(data).lean();
     }
 
     async deleteMany(data) {
-        return Reminder.deleteMany(data);
+        return Reminder.deleteMany(data).lean();
     }
 
     async getAll() {
@@ -25,7 +25,7 @@ class mongoDbWithMongoose {
     }
 
     async findByIdAndUpdate(id, data) {
-        return Reminder.findByIdAndUpdate(id, data);
+        return Reminder.findByIdAndUpdate(id, data).lean();
     }
 }
 
