@@ -45,11 +45,7 @@ class ReminderService {
 
         for (const reminder of reminders) {
             if (reminder.time <= new Date()) {
-                await this.acceptOrSnoozeReminder({
-                    dbReminderId: reminder.id,
-                    acceptOrSnooze: "accept",
-                    "messenger user id": ""
-                })
+                await this.acceptOrSnoozeReminder(reminder)
             }
         }
     }
