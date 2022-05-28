@@ -1,10 +1,15 @@
 import controlService from "../models/controlService.js";
 
 export const controlController = {
-    start: (req, res) => {
-        controlService.start();
+    start: (req, res, next) => {
+        try {
+            let result = controlService.start();
 
-        res.send("started")
+            console.log(result);
+            res.send(result);
+        } catch (e) {
+            next(e);
+        }
     },
 
     stop: (req, res) => {

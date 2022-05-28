@@ -4,21 +4,21 @@ let interval;
 
 class controlService {
     start(time = 60000) {
+
         clearInterval(interval);
 
         interval = setInterval(async () => {
             await reminderService.checkReminder();
         }, time);
 
-        console.log('started');
-        return('started');
+        return ("started");
     }
 
     stop() {
         clearInterval(interval);
 
-        console.log('stopped');
-        return('stopped');
+        console.log("stopped");
+        return ("stopped");
     }
 }
 
