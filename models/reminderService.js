@@ -5,17 +5,14 @@ import ApiError from "../Errors/apiError.js";
 class ReminderService {
 
     async getReminders(data) {
-        if (data.amount.toLowerCase() === "todays") {
-            const today = new Date();
+        if (data.amount.toLowerCase().trim() === "todays") {
 
             let reminders = await reminderDB.find({"messenger user id": data["messenger user id"]});
             reminders = reminders.filter((reminder) => Utils.isToday(reminder.time));
 
             return Utils.whetherRemindersFound(reminders, "You have no reminders for today.")
 
-            if (reminders.length > 0) {
-                return reminders;
-            } else return "You have no reminders for today."
+        } else if (data.amount.toLowerCase().trim() === "all") {
 
             const reminders = await reminderDB.find({"messenger user id": data["messenger user id"]});
 
