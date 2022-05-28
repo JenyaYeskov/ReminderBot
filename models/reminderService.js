@@ -41,12 +41,16 @@ class ReminderService {
     }
 
     async checkReminder() {
-        const reminders = await reminderDB.getAll();
+        try {
+            const reminders = await reminderDB.getAll();
 
-        for (const reminder of reminders) {
-            if (reminder.time <= new Date()) {
-                await this.acceptOrSnoozeReminder(reminder)
+            for (const reminder of reminders) {
+                if (reminder.time <= new Date()) {
+                    await this.acceptOrSnoozeReminder(reminder)
+                }
             }
+        } catch (e) {
+            console.error(e);
         }
     }
 

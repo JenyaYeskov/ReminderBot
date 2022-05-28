@@ -22,14 +22,11 @@ beforeAll(async () => {
 })
 
 beforeEach(async () => {
-    await supertest(app).post("/reminders/delete").send({
-        "userReminderId": "",
-        "messenger user id": process.env.fbMessengerId,
-        "amount": "all"
-    })
+    await mongoose.connection.db.dropDatabase();
 })
 
 afterAll(async () => {
+    await mongoose.connection.db.dropDatabase();
     await mongoose.connection.close()
 })
 
