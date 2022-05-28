@@ -21,7 +21,7 @@ class ReminderUtils {
                 result = DateAndTime.parse(timeString, `${pattern} Z`);
             }
         }
-        if (result){
+        if (result) {
             return result;
         } else throw new ApiError(400, "Wrong date or time.")
     }
@@ -67,6 +67,16 @@ class ReminderUtils {
         }
 
         return id;
+    }
+
+    isToday(day) {
+        return DateAndTime.isSameDay(new Date(), day);
+    }
+
+    whetherRemindersFound(reminders, message) {
+        if (reminders.length > 0) {
+            return reminders;
+        } else return message
     }
 }
 
