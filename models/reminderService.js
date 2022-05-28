@@ -1,5 +1,4 @@
 import reminderDB from "./mongoDbWithMongoose.js";
-import DateAndTime from "date-and-time"
 import Utils from "./reminderUtils.js";
 import ApiError from "../Errors/apiError.js";
 
@@ -10,16 +9,19 @@ class ReminderService {
             const today = new Date();
 
             let reminders = await reminderDB.find({"messenger user id": data["messenger user id"]});
-            reminders = reminders.filter((reminder) => DateAndTime.isSameDay(today, reminder.time));
+            reminders = reminders.filter((reminder) => Utils.isToday(reminder.time));
+
+            return Utils.whetherRemindersFound(reminders, "You have no reminders for today.")
 
             if (reminders.length > 0) {
                 return reminders;
             } else return "You have no reminders for today."
 
-        } else if (data.amount.toLowerCase() === "all") {
-            return await reminderDB.find({"messenger user id": data["messenger user id"]});
-        } else throw new ApiError(400, "Invalid input.")
+            const reminders = await reminderDB.find({"messenger user id": data["messenger user id"]});
 
+            return Utils.whetherRemindersFound(reminders, "You have no reminders.")
+
+        } else throw new ApiError(400, "Invalid input.")
     }
 
     async createReminder(data) {
