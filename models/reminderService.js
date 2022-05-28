@@ -12,10 +12,13 @@ class ReminderService {
             let reminders = await reminderDB.find({"messenger user id": data["messenger user id"]});
             reminders = reminders.filter((reminder) => DateAndTime.isSameDay(today, reminder.time));
 
-            return reminders;
+            if (reminders.length > 0) {
+                return reminders;
+            } else return "You have no reminders for today."
+
         } else if (data.amount.toLowerCase() === "all") {
             return await reminderDB.find({"messenger user id": data["messenger user id"]});
-        } else return "Invalid input"
+        } else throw new ApiError(400, "Invalid input.")
 
     }
 
