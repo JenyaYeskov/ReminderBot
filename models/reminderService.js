@@ -25,6 +25,10 @@ class ReminderService {
         data.userReminderId = await Utils.getNewId(data["messenger user id"]);
         data.time = await Utils.getReminderTime(data.dateInput, data.timeInput, data.timezone);
 
+        if (data.time < new Date()){
+            throw new ApiError(400,"Sorry, can't remind you of something from the past.")
+        }
+
         const result = await reminderDB.createNew(data);
         result.statusCode = 201;
 

@@ -26,7 +26,7 @@ async function start() {
     }
 }
 
-await start();
+// await start();
 
 export default app;
 
