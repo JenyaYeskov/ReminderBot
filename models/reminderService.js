@@ -36,7 +36,7 @@ class ReminderService {
     }
 
     async deleteReminder(data) {
-        if (data.amount.toLowerCase() === ("one" || 1)) {
+        if (data.amount.toLowerCase().trim() === ("one" || 1)) {
             let deleted = await reminderDB.findOneAndDelete({
                 userReminderId: data.userReminderId,
                 "messenger user id": data["messenger user id"]
