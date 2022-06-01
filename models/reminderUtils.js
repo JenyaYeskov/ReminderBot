@@ -74,7 +74,7 @@ class ReminderUtils {
     }
 
     async whetherRemindersFound(reminders, message) {
-        if (reminders.length > 0) {
+        if (reminders[0]) {
             return reminders;
         } else return message
     }
