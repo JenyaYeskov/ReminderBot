@@ -16,7 +16,7 @@ class ReminderService {
 
             const reminders = await reminderDB.find({"messenger user id": data["messenger user id"]});
 
-            return Utils.whetherRemindersFound(reminders, "You have no reminders.")
+            return await Utils.whetherRemindersFound(reminders, "You have no reminders.")
 
         } else throw new ApiError(400, "Invalid input.")
     }

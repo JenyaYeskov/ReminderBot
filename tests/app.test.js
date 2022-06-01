@@ -156,7 +156,7 @@ describe("Reminder routes testing", () => {
                 "messenger user id": process.env.fbMessengerId
             })
 
-            expect(response.body.length).toBe(0)
+            expect(response.text).toEqual("You have no reminders.")
         });
 
         it("should delete only one reminder from db by id", async () => {

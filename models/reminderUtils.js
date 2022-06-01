@@ -73,7 +73,7 @@ class ReminderUtils {
         return DateAndTime.isSameDay(new Date(), day);
     }
 
-    whetherRemindersFound(reminders, message) {
+    async whetherRemindersFound(reminders, message) {
         if (reminders.length > 0) {
             return reminders;
         } else return message
