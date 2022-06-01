@@ -25,8 +25,8 @@ class ReminderService {
         data.userReminderId = await Utils.getNewId(data["messenger user id"]);
         data.time = await Utils.getReminderTime(data.dateInput, data.timeInput, data.timezone);
 
-        if (data.time < new Date()){
-            throw new ApiError(400,"Sorry, can't remind you of something from the past.")
+        if (data.time < new Date()) {
+            throw new ApiError(400, "Sorry, can't remind you of something from the past.")
         }
 
         const result = await reminderDB.createNew(data);
@@ -37,10 +37,12 @@ class ReminderService {
 
     async deleteReminder(data) {
         if (data.amount.toLowerCase() === ("one" || 1)) {
-            return reminderDB.findOneAndDelete({
+            let deleted = await reminderDB.findOneAndDelete({
                 userReminderId: data.userReminderId,
                 "messenger user id": data["messenger user id"]
             });
+
+            return Utils.whetherRemindersFound([deleted], `You have no reminders with id ${data.userReminderId}`);
         } else if (data.amount.toLowerCase() === "all") {
             return reminderDB.deleteMany({"messenger user id": data["messenger user id"]});
         } else return "Invalid input"
