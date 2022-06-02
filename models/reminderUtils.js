@@ -9,7 +9,10 @@ class ReminderUtils {
     dateAndTimePatterns = ['DD.MM.YYYY HH.mm', 'D.MM.YYYY HH.mm', 'DD.MM.YYYY H.mm',
         'D.MM.YYYY H.mm', 'DD.MM.YY HH.mm', 'D.MM.YY HH.mm', 'DD.MM.YY H.mm', 'D.MM.YY H.mm',
         'DD.M.YYYY HH.mm', 'D.M.YYYY HH.mm', 'DD.M.YYYY H.mm', 'D.M.YYYY H.mm', 'DD.M.YY HH.mm',
-        'D.M.YY HH.mm', 'DD.M.YY H.mm', 'D.M.YY H.mm'];
+        'D.M.YY HH.mm', 'DD.M.YY H.mm', 'D.M.YY H.mm', 'DD.MM.YYYY HH.m', 'D.MM.YYYY HH.m', 'DD.MM.YYYY H.m',
+        'D.MM.YYYY H.m', 'DD.MM.YY HH.m', 'D.MM.YY HH.m', 'DD.MM.YY H.m', 'D.MM.YY H.m',
+        'DD.M.YYYY HH.m', 'D.M.YYYY HH.m', 'DD.M.YYYY H.m', 'D.M.YYYY H.m', 'DD.M.YY HH.m',
+        'D.M.YY HH.m', 'DD.M.YY H.m', 'D.M.YY H.m'];
 
     async getReminderTime(date, time, offset) {
         let result;
