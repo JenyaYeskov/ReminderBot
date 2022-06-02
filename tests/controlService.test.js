@@ -25,7 +25,6 @@ describe("", () => {
         });
 
         reminderService.acceptOrSnoozeReminder = jest.fn().mockImplementation(async (data) => {
-            console.log(data)
             return `time to ${data.event}`;
         });
 

@@ -4,12 +4,19 @@ import mongoose from "mongoose";
 import {MongooseConnection} from "../config/mongooseConnection.js";
 
 let reminderInfo = {
-    "dateInput": "23.03.22",
+    "dateInput": "",
     "messenger user id": process.env.fbMessengerId,
-    "timeInput": "05.10",
-    "timezone": "2",
+    "timeInput": "12.30",
+    "timezone": "3",
     "event": "do something"
 }
+let today = new Date();
+today.setSeconds(0, 0);
+
+let future = new Date(today.getFullYear(), today.getMonth() + 1, 15, 12, 30);
+future.setUTCHours(9)
+
+reminderInfo.dateInput = `${future.getDate()}.${future.getMonth() + 1}.${future.getFullYear()}`;
 
 beforeAll(async () => {
     const mongoConnection = new MongooseConnection("mongo testing connection", process.env.MONGO_TEST_URI);
@@ -43,22 +50,22 @@ describe("Reminder routes testing", () => {
 
         it('should create new reminder in the db, and return reminder info', async () => {
             const response = await supertest(app).post("/reminders/addRem").send(reminderInfo);
+            expect(new Date(response.body.time)).toEqual(future)
 
             expect(response.body).toEqual({
-                "userReminderId": expect.any(Number),
-                "messenger user id": process.env.fbMessengerId,
-                "dateInput": "23.03.22",
-                "timeInput": "05.10",
-                "event": "do something",
-                "time": "2022-03-23T03:10:00.000Z",
+                "messenger user id": reminderInfo["messenger user id"],
+                "dateInput": reminderInfo.dateInput,
+                "timeInput": reminderInfo.timeInput,
+                "event": reminderInfo.event,
+                "time": future.toISOString(),
+                "userReminderId": 1,
                 "_id": expect.any(String),
-                "__v": 0
+                "__v": expect.anything()
             })
         });
     })
 
     describe("/reminders/getRems route tests", () => {
-        let today = new Date();
 
         it("should return status code 200 ", async () => {
             const response = await supertest(app).post("/reminders/getRems").send({
@@ -84,28 +91,29 @@ describe("Reminder routes testing", () => {
 
             for (let i = 0; i < response.body.length; i++) {
                 expect(response.body[i]).toEqual({
-                    "_id": expect.any(String),
+                    "messenger user id": reminderInfo["messenger user id"],
+                    "dateInput": reminderInfo.dateInput,
+                    "timeInput": reminderInfo.timeInput,
+                    "event": reminderInfo.event,
+                    "time": future.toISOString(),
                     "userReminderId": i + 1,
-                    "messenger user id": process.env.fbMessengerId,
-                    "dateInput": "23.03.22",
-                    "timeInput": "05.10",
-                    "event": "do something",
-                    "time": "2022-03-23T03:10:00.000Z",
-                    "__v": 0
+                    "_id": expect.any(String),
+                    "__v": expect.anything()
                 })
             }
-
         });
 
         it("should return today's reminders info", async () => {
+            let todayInfo;
 
             for (let i = 0; i < 3; i++) {
                 await supertest(app).post("/reminders/addRem").send(reminderInfo);
 
-                let newInfo = Object.assign({}, reminderInfo);
-                newInfo.dateInput = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
+                todayInfo = Object.assign({}, reminderInfo);
+                todayInfo.dateInput = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
+                todayInfo.timeInput = `${today.getHours() + 1}.${today.getMinutes()}`;
 
-                await supertest(app).post("/reminders/addRem").send(newInfo);
+                await supertest(app).post("/reminders/addRem").send(todayInfo);
             }
 
             const response = await supertest(app).post("/reminders/getRems").send({
@@ -116,23 +124,25 @@ describe("Reminder routes testing", () => {
             expect(response.body.length).toBe(3);
 
             let id = 0
+            let checkDate = new Date(today)
+            checkDate.setHours(checkDate.getHours() + 1);
+
             for (let i = 0; i < response.body.length; i++) {
                 id += 2;
 
                 expect(response.body[i]).toEqual({
-                    "_id": expect.any(String),
+                    "messenger user id": todayInfo["messenger user id"],
+                    "dateInput": todayInfo.dateInput,
+                    "timeInput": todayInfo.timeInput,
+                    "event": todayInfo.event,
+                    "time": checkDate.toISOString(),
                     "userReminderId": id,
-                    "messenger user id": process.env.fbMessengerId,
-                    "dateInput": `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`,
-                    "timeInput": "05.10",
-                    "event": "do something",
-                    "time": expect.any(String),
-                    "__v": 0
+                    "_id": expect.any(String),
+                    "__v": expect.anything()
                 })
 
                 expect(new Date(response.body[i].time).toDateString()).toBe(today.toDateString());
             }
-
         });
     });
 
@@ -149,7 +159,8 @@ describe("Reminder routes testing", () => {
                 "amount": "all"
             })
 
-            expect(response.body.deletedCount).toBe(3);
+            expect(response.statusCode).toBe(200);
+            expect(response.text).toEqual("Deleted 3 reminder(s). All your reminders have been deleted.")
 
             response = await supertest(app).post("/reminders/getRems").send({
                 "amount": "all",
@@ -171,7 +182,7 @@ describe("Reminder routes testing", () => {
                 "amount": "one"
             })
 
-            expect(response.body.userReminderId).toBe(2);
+            expect(response.body[0].userReminderId).toBe(2);
 
             response = await supertest(app).post("/reminders/getRems").send({
                 "amount": "all",
