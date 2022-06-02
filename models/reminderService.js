@@ -36,7 +36,7 @@ class ReminderService {
     }
 
     async deleteReminder(data) {
-        if (data.amount.toLowerCase().trim() === ("one" || 1)) {
+        if (data.amount.toLowerCase().trim() === ("one" || 1) && !isNaN(data.userReminderId)) {
             let deleted = await reminderDB.findOneAndDelete({
                 userReminderId: data.userReminderId,
                 "messenger user id": data["messenger user id"]
@@ -67,7 +67,7 @@ class ReminderService {
         }
     }
 
-    acceptOrSnoozeReminder(data) {
+    async acceptOrSnoozeReminder(data) {
         const {acceptOrSnooze} = data;
         const {dbReminderId} = data;
 
