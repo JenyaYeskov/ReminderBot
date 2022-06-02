@@ -5,7 +5,7 @@ class ReminderController {
         try {
             const data = await method(req.body);
 
-            if (data.statusCode){
+            if (data.statusCode) {
                 res.status(data.statusCode);
             }
 
@@ -23,8 +23,8 @@ class ReminderController {
         return this.handleRequest(reminderService.createReminder, req, res, next);
     }
 
-     async deleteReminder(req, res, next) {
-         return this.handleRequest(reminderService.deleteReminder, req, res, next);
+    async deleteReminder(req, res, next) {
+        return this.handleRequest(reminderService.deleteReminder, req, res, next);
     }
 
     async acceptOrSnoozeReminder(req, res, next) {

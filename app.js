@@ -20,13 +20,13 @@ app.use(errorHandler);
 
 async function start() {
     try {
-        controlService.start(10000);
+        controlService.start();
     } catch (e) {
         console.error(e);
     }
 }
 
-// await start();
+await start();
 
 export default app;
 

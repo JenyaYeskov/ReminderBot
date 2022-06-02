@@ -20,7 +20,6 @@ export class MongooseConnection extends DB {
         } catch (e) {
             console.error(e);
         }
-
     }
 }
 

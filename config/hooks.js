@@ -10,5 +10,4 @@ export function applyHooks(db, connection) {
             process.exit(0);
         });
     });
-
 }

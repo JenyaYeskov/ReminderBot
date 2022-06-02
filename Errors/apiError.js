@@ -1,4 +1,4 @@
-class ApiError extends Error{
+class ApiError extends Error {
     constructor(status = 400, ...params) {
         super(params);
 

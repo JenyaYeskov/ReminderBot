@@ -17,5 +17,4 @@ export const controlController = {
 
         res.send("stopped")
     }
-
 }
