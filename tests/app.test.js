@@ -233,4 +233,13 @@ describe("Reminder routes testing", () => {
         });
     });
 
+    describe("Wrong path test", () => {
+        it("should return 404 status and 'not found' message when the pah  is unknown", async () => {
+            const response = await supertest(app).get("/qwerty");
+
+            expect(response.statusCode).toBe(404);
+            expect(response.text).toBe("Not found.");
+        });
+    })
+
 })
