@@ -180,6 +180,23 @@ describe("Reminder routes testing", () => {
                 expect(new Date(response.body[i].time).toDateString()).toBe(today.toDateString());
             }
         });
+
+        it("should return status code 400 and an error message when an amount input is unpredicted", async () => {
+            const response = await supertest(app).post("/reminders/getRems").send({
+                "amount": "wrong input",
+                "messenger user id": process.env.fbMessengerId
+            })
+
+            expect(response.statusCode).toBe(400);
+            expect(response.text).toBe("Invalid input.");
+        })
+
+        it.skip("should return status code 500 and a server error message when no required info provided", async () => {
+            const response = await supertest(app).post("/reminders/addRem").send()
+
+            expect(response.statusCode).toBe(500);
+            expect(response.text).toBe("Something went wrong, please try again.");
+        })
     });
 
     describe("/reminders/delete route tests", () => {
