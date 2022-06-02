@@ -147,7 +147,7 @@ describe("Reminder routes testing", () => {
 
                 todayInfo = Object.assign({}, reminderInfo);
                 todayInfo.dateInput = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
-                todayInfo.timeInput = `${today.getHours() + 1}.${today.getMinutes()}`;
+                todayInfo.timeInput = `23.59`;
 
                 await supertest(app).post("/reminders/addRem").send(todayInfo);
             }
@@ -161,7 +161,8 @@ describe("Reminder routes testing", () => {
 
             let id = 0
             let checkDate = new Date(today)
-            checkDate.setHours(checkDate.getHours() + 1);
+            checkDate.setHours(23);
+            checkDate.setMinutes(59)
 
             for (let i = 0; i < response.body.length; i++) {
                 id += 2;
@@ -251,7 +252,7 @@ describe("Reminder routes testing", () => {
     });
 
     describe("Wrong path test", () => {
-        it("should return 404 status and 'not found' message when the pah  is unknown", async () => {
+        it("should return 404 status and 'not found' message when the pah is unknown", async () => {
             const response = await supertest(app).get("/qwerty");
 
             expect(response.statusCode).toBe(404);
