@@ -45,7 +45,6 @@ describe("Reminder routes testing", () => {
             const response = await supertest(app).post("/reminders/addRem").send(reminderInfo)
 
             expect(response.statusCode).toBe(201);
-
         })
 
         it('should create new reminder in the db, and return reminder info', async () => {
@@ -63,6 +62,43 @@ describe("Reminder routes testing", () => {
                 "__v": expect.anything()
             })
         });
+
+        it("should return status code 400 and an error message when date input is wrong", async () => {
+            let wrongDate = Object.assign({}, reminderInfo);
+            wrongDate.dateInput = "wrong input"
+
+            const response = await supertest(app).post("/reminders/addRem").send(wrongDate)
+
+            expect(response.statusCode).toBe(400);
+            expect(response.text).toBe("Wrong date or time.");
+        })
+
+        it("should return status code 400 and an error message when time input is wrong", async () => {
+            let wrongTime = Object.assign({}, reminderInfo);
+            wrongTime.timeInput = "wrong input"
+
+            const response = await supertest(app).post("/reminders/addRem").send(wrongTime)
+
+            expect(response.statusCode).toBe(400);
+            expect(response.text).toBe("Wrong date or time.");
+        })
+
+        it("should return status code 400 and an error message when trying to set a reminder with a past time", async () => {
+            let past = Object.assign({}, reminderInfo);
+            past.dateInput = `${today.getDate()}.${today.getMonth() - 1}.${today.getFullYear()}`;
+
+            const response = await supertest(app).post("/reminders/addRem").send(past)
+
+            expect(response.statusCode).toBe(400);
+            expect(response.text).toBe("Sorry, can't remind you of something from the past.");
+        })
+
+        it.skip("should return status code 500 and a server error message when no required info provided", async () => {
+            const response = await supertest(app).post("/reminders/addRem").send()
+
+            expect(response.statusCode).toBe(500);
+            expect(response.text).toBe("Something went wrong, please try again.");
+        })
     })
 
     describe("/reminders/getRems route tests", () => {
