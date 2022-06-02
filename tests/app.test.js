@@ -249,6 +249,34 @@ describe("Reminder routes testing", () => {
                 expect(response.userReminderId).not.toBe(2);
             }
         });
+
+        it("should return status code 400 and an error message when an amount input is invalid", async () => {
+            let response = await supertest(app).post("/reminders/delete").send({
+                "messenger user id": process.env.fbMessengerId,
+                "amount": "wrong input"
+            })
+
+            expect(response.statusCode).toBe(400);
+            expect(response.text).toBe("Invalid input.");
+        })
+
+        it("should return status code 400 and an error message when id input is invalid", async () => {
+            let response = await supertest(app).post("/reminders/delete").send({
+                "userReminderId": "wrong input",
+                "messenger user id": process.env.fbMessengerId,
+                "amount": "one"
+            })
+
+            expect(response.statusCode).toBe(400);
+            expect(response.text).toBe("Invalid input.");
+        })
+
+        it.skip("should return status code 500 and a server error message when no required info provided", async () => {
+            const response = await supertest(app).post("/reminders/addRem").send()
+
+            expect(response.statusCode).toBe(500);
+            expect(response.text).toBe("Something went wrong, please try again.");
+        })
     });
 
     describe("Wrong path test", () => {
