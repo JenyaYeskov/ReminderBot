@@ -8,8 +8,10 @@ class reminderView {
             }
 
             return response
-        }else if (typeof data === "string") {
-            return [{"text" : data}]
+        } else if (typeof data === "string") {
+            return [{"text": data}]
+        } else if (typeof data === "object") {
+            return [{"text": `${data.userReminderId} : ${data.event} : ${data.time}`}]
         }
     }
 }
