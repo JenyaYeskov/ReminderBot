@@ -1,4 +1,5 @@
 import reminderService from "../models/reminderService.js";
+import reminderView from "../view/reminderView.js";
 
 class ReminderController {
     async handleRequest(method, req, res, next) {
@@ -9,7 +10,7 @@ class ReminderController {
                 res.status(data.statusCode);
             }
 
-            return res.send(data);
+            return res.send(reminderView.showResponse(data));
         } catch (err) {
             next(err);
         }
