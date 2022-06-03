@@ -8,6 +8,8 @@ class reminderView {
             }
 
             return response
+        }else if (typeof data === "string") {
+            return [{"text" : data}]
         }
     }
 }
