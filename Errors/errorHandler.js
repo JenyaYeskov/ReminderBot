@@ -19,7 +19,7 @@ export default function handle(err, req, res, next) {
 }
 
 function adjustStatus(req, res) {
-    if (req.headers["user-agent"] === "chatfuel"){
+    if (req.headers["user-agent"].toLowerCase().trim() === "chatfuel"){
         res.status(200);
     }
 }
