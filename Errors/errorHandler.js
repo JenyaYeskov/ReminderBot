@@ -2,18 +2,24 @@ import ApiError from "./apiError.js";
 import reminderView from "../view/reminderView.js";
 
 export default function handle(err, req, res, next) {
-    if (err instanceof ApiError) {
-        res.status(err.status);
+    try {
+        if (err instanceof ApiError) {
+            res.status(err.status);
+            adjustStatus(req, res);
+
+            return res.send(reminderView.showResponse(err.message));
+        }
+
+        console.error(err);
+        res.status(500);
         adjustStatus(req, res);
 
-        return res.send(reminderView.showResponse(err.message));
+        return res.send(reminderView.showResponse("Something went wrong, please try again."));
+
+    } catch (e) {
+        console.error(e);
+        res.status(500).end("Something went wrong");
     }
-
-    console.error(err);
-    res.status(500);
-    adjustStatus(req, res);
-
-    return res.send(reminderView.showResponse("Something went wrong, please try again."));
 
 }
 
