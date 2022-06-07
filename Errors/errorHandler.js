@@ -2,9 +2,7 @@ import ApiError from "./apiError.js";
 import reminderView from "../view/reminderView.js";
 
 export default function handle(err, req, res, next) {
-
     if (err instanceof ApiError) {
-        console.log(req)
         res.status(err.status);
         adjustStatus(req, res);
 
@@ -19,7 +17,7 @@ export default function handle(err, req, res, next) {
 }
 
 function adjustStatus(req, res) {
-    if (req.headers["user-agent"].toLowerCase().trim() === "chatfuel"){
+    if (req.headers["user-agent"].toLowerCase().trim() === "chatfuel") {
         res.status(200);
     }
 }
