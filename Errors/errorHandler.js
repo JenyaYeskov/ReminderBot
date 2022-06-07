@@ -7,13 +7,14 @@ export default function handle(err, req, res, next) {
         adjustStatus(req, res);
 
         return res.send(reminderView.showResponse(err.message));
-    } else {
-        console.error(err);
-        res.status(500);
-        adjustStatus(req, res);
-
-        return res.send(reminderView.showResponse("Something went wrong, please try again."));
     }
+
+    console.error(err);
+    res.status(500);
+    adjustStatus(req, res);
+
+    return res.send(reminderView.showResponse("Something went wrong, please try again."));
+
 }
 
 function adjustStatus(req, res) {
