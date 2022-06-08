@@ -1,3 +1,4 @@
+import "dotenv/config";
 import reminderDB from "./mongoDbWithMongoose.js";
 import Utils from "./reminderUtils.js";
 import ApiError from "../Errors/apiError.js";
@@ -71,6 +72,14 @@ class ReminderService {
     async activateReminder(reminder, message) {
         let url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${reminder["messenger user id"]}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Reminder activation flow&event=${message}&dbReminderId=${reminder._id.toString()}`
 
+        return this.sendMessage(url);
+    }
+
+    async sendMessage(url, user, message) {
+        if (!url) {
+            url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${user}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Message&message=${message}`
+        }
+
         return axios({
             method: 'post',
             url: url,
@@ -79,8 +88,7 @@ class ReminderService {
     }
 
     async acceptOrSnoozeReminder(data) {
-        const {acceptOrSnooze} = data;
-        const {dbReminderId} = data;
+        const {acceptOrSnooze, dbReminderId} = data;
 
         if (acceptOrSnooze.toLowerCase() === 'accept') {
             return (this.acceptReminder(dbReminderId));
@@ -99,7 +107,7 @@ class ReminderService {
 
     async acceptReminder(DBReminderID) {
         const deletedReminder = await reminderDB.findOneAndDelete({id: DBReminderID});
-        return `Reminder "${deletedReminder.event}" was deleted.`;
+        return `Done. Reminder "${deletedReminder.event}" was deleted.`;
     }
 
 }
