@@ -81,8 +81,9 @@ class ReminderService {
         const {acceptOrSnooze} = data;
         const {dbReminderId} = data;
 console.log(data)
+        // console.log("khblkkk    " + await  this.acceptReminder)
         if (acceptOrSnooze.toLowerCase() === 'accept') {
-            return (this.acceptReminder(dbReminderId));
+            return (this.acceptReminder( dbReminderId));
         } else if (acceptOrSnooze.toLowerCase() === 'snooze') {
             return (this.snoozeReminder(dbReminderId));
         }

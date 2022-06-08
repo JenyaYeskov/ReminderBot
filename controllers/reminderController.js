@@ -29,7 +29,7 @@ class ReminderController {
     }
 
     async acceptOrSnoozeReminder(req, res, next) {
-        return this.handleRequest(reminderService.acceptOrSnoozeReminder, req, res, next);
+        return this.handleRequest(reminderService.acceptOrSnoozeReminder.bind(reminderService), req, res, next);
     }
 }
 
