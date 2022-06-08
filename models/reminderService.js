@@ -63,8 +63,8 @@ class ReminderService {
                     // await this.acceptOrSnoozeReminder(reminder)
                     return await axios({
                         method: 'post',
-                        url: `https://api.chatfuel.com/bots/61e8d5515f917b145dff3bfe/users/${reminder["messenger user id"]}/send?chatfuel_token=FLVgqoIjXiykg6Ameirt8c5sg7nDpuSfoefL24E12rtOe6I1wxc2SrwN3d5Bn39G&chatfuel_flow_name=Flow2&event=Time to ${reminder.event}`
-
+                        url: `https://api.chatfuel.com/bots/61e8d5515f917b145dff3bfe/users/${reminder["messenger user id"]}/send?chatfuel_token=FLVgqoIjXiykg6Ameirt8c5sg7nDpuSfoefL24E12rtOe6I1wxc2SrwN3d5Bn39G&chatfuel_flow_name=Flow2&event=Time to ${reminder.event}`,
+                        headers: { 'Content-Type': 'application/json' }
                     });
 
                 //     return await axios.post(encodeURI(
