@@ -20,7 +20,7 @@ app.use(errorHandler);
 
 async function start() {
     try {
-        controlService.start();
+        controlService.start(10000);
     } catch (e) {
         console.error(e);
     }

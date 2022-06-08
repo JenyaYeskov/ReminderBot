@@ -60,10 +60,11 @@ class ReminderService {
 
             for (const reminder of reminders) {
                 if (reminder.time <= new Date()) {
+                    console.log(reminder._id)
                     // await this.acceptOrSnoozeReminder(reminder)
                     return await axios({
                         method: 'post',
-                        url: `https://api.chatfuel.com/bots/61e8d5515f917b145dff3bfe/users/${reminder["messenger user id"]}/send?chatfuel_token=FLVgqoIjXiykg6Ameirt8c5sg7nDpuSfoefL24E12rtOe6I1wxc2SrwN3d5Bn39G&chatfuel_flow_name=Flow2&event=Time to ${reminder.event}&dbReminderId=${reminder.id}`,
+                        url: `https://api.chatfuel.com/bots/61e8d5515f917b145dff3bfe/users/${reminder["messenger user id"]}/send?chatfuel_token=FLVgqoIjXiykg6Ameirt8c5sg7nDpuSfoefL24E12rtOe6I1wxc2SrwN3d5Bn39G&chatfuel_flow_name=Flow2&event=Time to ${reminder.event}&dbReminderId=${reminder._id}`,
                         headers: { 'Content-Type': 'application/json' }
                     });
 
