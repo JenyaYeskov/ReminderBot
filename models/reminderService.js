@@ -61,8 +61,9 @@ class ReminderService {
             for (const reminder of reminders) {
                 if (reminder.time <= new Date()) {
                     // await this.acceptOrSnoozeReminder(reminder)
-                    return await axios.post(
-                        `https://api.chatfuel.com/bots/61e8d5515f917b145dff3bfe/users/${reminder["messenger user id"]}/send?chatfuel_token=FLVgqoIjXiykg6Ameirt8c5sg7nDpuSfoefL24E12rtOe6I1wxc2SrwN3d5Bn39G&chatfuel_flow_name=Flow 2&event=Time to ${reminder.event}`)
+
+                    return await axios.post(encodeURI(
+                        `https://api.chatfuel.com/bots/61e8d5515f917b145dff3bfe/users/${reminder["messenger user id"]}/send?chatfuel_token=FLVgqoIjXiykg6Ameirt8c5sg7nDpuSfoefL24E12rtOe6I1wxc2SrwN3d5Bn39G&chatfuel_flow_name=Flow 2&event=Time to ${reminder.event}`))
                 }
             }
         } catch (e) {
