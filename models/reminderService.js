@@ -96,7 +96,10 @@ class ReminderService {
             return (this.snoozeReminder(dbReminderId));
         } else {
             this.sendMessage(null, data["messenger user id"], "Invalid input. Please use buttons.");
-            return this.activateReminder(await reminderDB.find({_id: dbReminderId}))
+
+            let rem = await reminderDB.find({id: dbReminderId});
+
+            return this.activateReminder(rem[0])
         }
     }
 
