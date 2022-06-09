@@ -99,7 +99,7 @@ class ReminderService {
 
             let rem = await reminderDB.find({id: dbReminderId});
 
-            this.activateReminder(rem[0], "q");
+            this.activateReminder(rem[0], "");
         }
     }
 
