@@ -2,6 +2,7 @@ import reminderService from "./reminderService.js";
 import DateAndTime from "date-and-time";
 import two_digit_year from "date-and-time/plugin/two-digit-year";
 import ApiError from "../Errors/apiError.js";
+import axios from "axios";
 
 DateAndTime.plugin(two_digit_year);
 
@@ -80,6 +81,18 @@ class ReminderUtils {
         if (reminders[0]) {
             return reminders;
         } else return message
+    }
+
+    async sendMessage(url, user, message) {
+        if (!url) {
+            url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${user}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Message&message=${message}`
+        }
+
+        return axios({
+            method: 'post',
+            url: url,
+            headers: {'Content-Type': 'application/json'}
+        });
     }
 }
 

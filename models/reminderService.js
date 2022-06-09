@@ -2,7 +2,6 @@ import "dotenv/config";
 import reminderDB from "./mongoDbWithMongoose.js";
 import Utils from "./reminderUtils.js";
 import ApiError from "../Errors/apiError.js";
-import axios from "axios";
 
 class ReminderService {
 
@@ -72,19 +71,7 @@ class ReminderService {
     async activateReminder(reminder, message) {
         let url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${reminder["messenger user id"]}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Reminder activation flow&event=${message}&dbReminderId=${reminder._id.toString()}`
 
-        return this.sendMessage(url);
-    }
-
-    async sendMessage(url, user, message) {
-        if (!url) {
-            url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${user}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Message&message=${message}`
-        }
-
-        return axios({
-            method: 'post',
-            url: url,
-            headers: {'Content-Type': 'application/json'}
-        });
+        return Utils.sendMessage(url);
     }
 
     async acceptOrSnoozeReminder(data) {
@@ -95,11 +82,10 @@ class ReminderService {
         } else if (acceptOrSnooze.toLowerCase() === 'snooze') {
             return (this.snoozeReminder(dbReminderId));
         } else {
-            // this.sendMessage(null, data["messenger user id"], "Invalid input. Please use buttons.");
+            const reminder = await reminderDB.find({id: dbReminderId});
 
-            let reminder = await reminderDB.find({id: dbReminderId});
-
-            this.activateReminder(reminder[0], "Invalid input. Please use buttons.");
+            await Utils.sendMessage(null, data["messenger user id"], "Invalid input. Please use buttons.");
+            await this.activateReminder(reminder[0], `Time to ${reminder.event}!`);
         }
     }
 
@@ -108,7 +94,7 @@ class ReminderService {
         newTime.setMinutes(newTime.getMinutes() + 10);
 
         const snoozedReminder = await reminderDB.findByIdAndUpdate(DBReminderID, {time: newTime});
-        return `Reminder "${snoozedReminder.event}" will show up in 10 minutes.`;
+        return `Done. Reminder "${snoozedReminder.event}" will show up in 10 minutes.`;
     }
 
     async acceptReminder(DBReminderID) {
