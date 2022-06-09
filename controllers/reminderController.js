@@ -6,11 +6,15 @@ class ReminderController {
         try {
             const data = await method(req.body);
 
-            if (data.statusCode) {
-                res.status(data.statusCode);
+            if (data) {
+                if (data.statusCode) {
+                    res.status(data.statusCode);
+                }
+
+                return res.send(reminderView.showResponse(data));
             }
 
-            return res.send(reminderView.showResponse(data));
+            return res.end();
         } catch (err) {
             next(err);
         }
