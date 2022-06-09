@@ -95,11 +95,11 @@ class ReminderService {
         } else if (acceptOrSnooze.toLowerCase() === 'snooze') {
             return (this.snoozeReminder(dbReminderId));
         } else {
-            this.sendMessage(null, data["messenger user id"], "Invalid input. Please use buttons.");
+            // this.sendMessage(null, data["messenger user id"], "Invalid input. Please use buttons.");
 
-            let rem = await reminderDB.find({id: dbReminderId});
+            let reminder = await reminderDB.find({id: dbReminderId});
 
-            this.activateReminder(rem[0], "");
+            this.activateReminder(reminder[0], "Invalid input. Please use buttons.");
         }
     }
 
