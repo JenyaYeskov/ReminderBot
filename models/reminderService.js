@@ -69,7 +69,7 @@ class ReminderService {
     }
 
     async activateReminder(reminder, message) {
-        let url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${reminder["messenger user id"]}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Reminder activation flow&event=${message}&dbReminderId=${reminder._id.toString()}`
+        let url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${reminder["messenger user id"]}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Reminder_activation_flow&event=${message}&dbReminderId=${reminder._id.toString()}`;
 
         return Utils.sendMessage(url);
     }
@@ -101,7 +101,6 @@ class ReminderService {
         const deletedReminder = await reminderDB.findOneAndDelete({id: DBReminderID});
         return `Done. Reminder "${deletedReminder.event}" was deleted.`;
     }
-
 }
 
 export default new ReminderService();

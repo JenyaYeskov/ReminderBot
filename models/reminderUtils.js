@@ -89,9 +89,9 @@ class ReminderUtils {
         }
 
         return axios({
-            method: 'post',
-            url: url,
-            headers: {'Content-Type': 'application/json'}
+            method: "post",
+            url: encodeURI(url),
+            headers: {"Content-Type": "application/json"}
         });
     }
 }
