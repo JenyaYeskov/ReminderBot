@@ -32,6 +32,7 @@ class ReminderService {
 
         const result = await reminderDB.createNew(data);
         result.statusCode = 201;
+        result.message = "was created."
 
         return result;
     }
