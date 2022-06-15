@@ -14,14 +14,16 @@ class ReminderService {
             reminders = reminders.filter((reminder) => Utils.isToday(reminder.time));
 
             return Utils.whetherRemindersFound(reminders, "You have no reminders for today.")
+        }
 
-        } else if (data.amount.toLowerCase().trim() === "all") {
+        if (amount === "all") {
 
             const reminders = await reminderDB.find({"messenger user id": data["messenger user id"]});
 
-            return await Utils.whetherRemindersFound(reminders, "You have no reminders.")
+            return Utils.whetherRemindersFound(reminders, "You have no reminders.");
+        }
 
-        } else throw new ApiError(400, "Invalid input.")
+        throw new ApiError(400, "Invalid input.")
     }
 
     async createReminder(data) {
