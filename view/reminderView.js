@@ -11,7 +11,7 @@ class reminderView {
         } else if (typeof data === "string") {
             return [{"text": data}]
         } else if (typeof data === "object") {
-            return [{"text": `${data.userReminderId} : ${data.event} : ${data.time}`}]
+            return [{"text": `Done. Reminder "${data.event}" with id: ${data.userReminderId} ${data.message}`}]
         }
     }
 }
