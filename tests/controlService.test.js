@@ -2,7 +2,7 @@ import {jest} from '@jest/globals';
 import reminderDB from "../models/mongoDbWithMongoose.js";
 import controlService from "../models/controlService.js";
 import reminderService from "../models/reminderService.js";
-
+//TODO: test
 describe("", () => {
     jest.setTimeout(10000);
 
@@ -24,10 +24,9 @@ describe("", () => {
             return reminderData;
         });
 
-        reminderService.acceptOrSnoozeReminder = jest.fn().mockImplementation(async (data) => {
+        reminderService.activateReminder = jest.fn().mockImplementation( async (data, message) => {
             return `time to ${data.event}`;
         });
-
 
         controlService.start(5000);
 
@@ -36,6 +35,5 @@ describe("", () => {
         jest.advanceTimersByTime(6000);
 
         expect(reminderDB.getAll).toBeCalled();
-        // expect(reminderService.acceptOrSnoozeReminder.mock.results[0]).toEqual(`time to ${reminderData[0].event}`)
     });
 })
