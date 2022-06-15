@@ -24,7 +24,7 @@ export default function handle(err, req, res, next) {
 }
 
 function adjustStatus(req, res) {
-    if (req.headers["user-agent"].toLowerCase().trim() === "chatfuel") {
+    if (req.headers["user-agent"] && req.headers["user-agent"].toLowerCase().trim() === "chatfuel") {
         res.status(200);
     }
 }
