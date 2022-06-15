@@ -5,8 +5,8 @@ class reminderView {
 
             for (let i = 0; i < data.length; i++) {
                 response.push({"text": `id: ${data[i].userReminderId}
-                 ${data[i].event}
-                 ${data[i].dateInput} : ${data[i].timeInput}`})
+                ${data[i].event}
+                ${data[i].dateInput} : ${data[i].timeInput}`})
             }
 
             return response
