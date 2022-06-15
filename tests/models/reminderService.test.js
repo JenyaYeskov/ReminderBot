@@ -28,7 +28,7 @@ describe("Reminder service tests", () => {
             });
 
             expect(reminderDB.findOneAndDelete).toBeCalledWith({"id": expect.any(String)});
-            expect(response).toBe(`Reminder "get up" was deleted.`);
+            expect(response).toBe(`Done. Reminder "get up" was deleted.`);
         });
 
         it('should add 10 minutes to reminders time, when reminder is snoozed', async function () {
@@ -46,7 +46,7 @@ describe("Reminder service tests", () => {
 
             expect(reminderDB.findByIdAndUpdate).toBeCalledWith(expect.any(String), {time: expect.any(Date)});
             expect(reminderDB.findByIdAndUpdate.mock.calls[0][1].time.toUTCString()).toEqual(time.toUTCString());
-            expect(response).toBe(`Reminder "get up" will show up in 10 minutes.`)
+            expect(response).toBe(`Done. Reminder "get up" will show up in 10 minutes.`)
         });
     })
 })
