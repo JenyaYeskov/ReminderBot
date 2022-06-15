@@ -6,7 +6,9 @@ import ApiError from "../Errors/apiError.js";
 class ReminderService {
 
     async getReminders(data) {
-        if (data.amount.toLowerCase().trim() === "todays") {
+        const amount = data.amount.toLowerCase().trim();
+
+        if (amount === "today's" || amount === "todays" || amount === "today") {
 
             let reminders = await reminderDB.find({"messenger user id": data["messenger user id"]});
             reminders = reminders.filter((reminder) => Utils.isToday(reminder.time));
