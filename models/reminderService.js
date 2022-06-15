@@ -44,15 +44,28 @@ class ReminderService {
                 "messenger user id": data["messenger user id"]
             });
 
-            return Utils.whetherRemindersFound([deleted], `You have no reminders with id ${data.userReminderId}`);
-        } else if (data.amount.toLowerCase().trim() === "all") {
+            let result = Utils.whetherRemindersFound([deleted], `You have no reminders with id ${data.userReminderId}`);
+
+            if (Array.isArray(result)) {
+                result = result[0];
+                result.message = "was deleted.";
+                return result;
+            }
+
+            return result;
+        }
+
+        if (data.amount.toLowerCase().trim() === "all") {
             let deleted = await reminderDB.deleteMany({"messenger user id": data["messenger user id"]});
 
             if (deleted.deletedCount > 0) {
-                return `Deleted ${deleted.deletedCount} reminder(s). All your reminders have been deleted.`
-            } else return `You have no reminders.`
+                return `Deleted ${deleted.deletedCount} reminder(s). All your reminders have been deleted.`;
+            }
 
-        } else throw new ApiError(400, "Invalid input.")
+            return `You have no reminders.`
+        }
+
+        throw new ApiError(400, "Invalid input.")
     }
 
     async checkReminder() {
