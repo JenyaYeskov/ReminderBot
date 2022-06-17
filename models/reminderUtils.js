@@ -1,12 +1,13 @@
 import reminderService from "./reminderService.js";
-import DateAndTime from "date-and-time";
-import two_digit_year from "date-and-time/plugin/two-digit-year";
 import ApiError from "../Errors/apiError.js";
 import axios from "axios";
+import DateAndTime from "date-and-time";
+import two_digit_year from "date-and-time/plugin/two-digit-year";
 
 DateAndTime.plugin(two_digit_year);
 
 class ReminderUtils {
+    //Patterns for parsing different variants of date and time input.
     dateAndTimePatterns = ['DD.MM.YYYY HH.mm', 'D.MM.YYYY HH.mm', 'DD.MM.YYYY H.mm',
         'D.MM.YYYY H.mm', 'DD.MM.YY HH.mm', 'D.MM.YY HH.mm', 'DD.MM.YY H.mm', 'D.MM.YY H.mm',
         'DD.M.YYYY HH.mm', 'D.M.YYYY HH.mm', 'DD.M.YYYY H.mm', 'D.M.YYYY H.mm', 'DD.M.YY HH.mm',
@@ -15,6 +16,7 @@ class ReminderUtils {
         'DD.M.YYYY HH.m', 'D.M.YYYY HH.m', 'DD.M.YYYY H.m', 'D.M.YYYY H.m', 'DD.M.YY HH.m',
         'D.M.YY HH.m', 'DD.M.YY H.m', 'D.M.YY H.m'];
 
+    //Parses date and time input into a Date object with a timezone offset.
     async getReminderTime(date, time, offset) {
         let result;
 
@@ -25,11 +27,15 @@ class ReminderUtils {
                 result = DateAndTime.parse(timeString, `${pattern} Z`);
             }
         }
+
         if (result) {
             return result;
-        } else throw new ApiError(400, "Wrong date or time.")
+        }
+
+        throw new ApiError(400, "Wrong date or time.")
     }
 
+    //Formatting offset before parsing.
     formatOffset(offset) {
         const separators = [".", ":", "/"];
 
@@ -77,12 +83,16 @@ class ReminderUtils {
         return DateAndTime.isSameDay(new Date(), day);
     }
 
+    //Checks reminders presence in the given array, and returns reminders or given message.
     whetherRemindersFound(reminders, message) {
         if (reminders[0]) {
             return reminders;
-        } else return message
+        }
+
+        return message
     }
 
+    //Makes axios request to the given url of chatfuel block, or to the default message block, if no url is given.
     async sendMessage(url, user, message) {
         if (!url) {
             url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${user}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Message&message=${message}`
