@@ -42,7 +42,10 @@ class ReminderService {
     }
 
     async deleteReminder(data) {
-        if (data.amount.toLowerCase().trim() === ("one" || 1) && !isNaN(data.userReminderId)) {
+        const amount = data.amount.toLowerCase().trim();
+
+        //Deleting single reminder
+        if (amount === ("one" || 1) && !isNaN(data.userReminderId)) {
             let deleted = await reminderDB.findOneAndDelete({
                 userReminderId: data.userReminderId,
                 "messenger user id": data["messenger user id"]
@@ -59,7 +62,8 @@ class ReminderService {
             return result;
         }
 
-        if (data.amount.toLowerCase().trim() === "all") {
+        //Deleting multiple reminders
+        if (amount === "all") {
             let deleted = await reminderDB.deleteMany({"messenger user id": data["messenger user id"]});
 
             if (deleted.deletedCount > 0) {
@@ -72,6 +76,7 @@ class ReminderService {
         throw new ApiError(400, "Invalid input.")
     }
 
+    //Checks if reminder's time has come, and if so - activates the reminder.
     async checkReminder() {
         try {
             const reminders = await reminderDB.getAll();
@@ -86,6 +91,7 @@ class ReminderService {
         }
     }
 
+    //Activates reminder by sending its data to certain chatfuel block.
     async activateReminder(reminder, message) {
         let url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${reminder["messenger user id"]}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Reminder_activation_flow&event=${message}&dbReminderId=${reminder._id.toString()}`;
 
@@ -109,6 +115,7 @@ class ReminderService {
         await this.activateReminder(reminder[0], `Time to ${reminder[0].event}!`);
     }
 
+    //snoozes a reminder by adding 10 min. to its time.
     async snoozeReminder(DBReminderID) {
         const newTime = new Date();
         newTime.setMinutes(newTime.getMinutes() + 10);
