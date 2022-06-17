@@ -2,7 +2,7 @@ import {jest} from '@jest/globals';
 import reminderDB from "../models/mongoDbWithMongoose.js";
 import controlService from "../models/controlService.js";
 import reminderService from "../models/reminderService.js";
-//TODO: test
+
 describe("", () => {
     jest.setTimeout(10000);
 

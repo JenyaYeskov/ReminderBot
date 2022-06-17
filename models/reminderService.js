@@ -95,16 +95,18 @@ class ReminderService {
     async acceptOrSnoozeReminder(data) {
         const {acceptOrSnooze, dbReminderId} = data;
 
-        if (acceptOrSnooze.toLowerCase() === 'accept') {
+        if (acceptOrSnooze.toLowerCase().trim() === "accept") {
             return (this.acceptReminder(dbReminderId));
-        } else if (acceptOrSnooze.toLowerCase() === 'snooze') {
-            return (this.snoozeReminder(dbReminderId));
-        } else {
-            const reminder = await reminderDB.find({id: dbReminderId});
-
-            await Utils.sendMessage(null, data["messenger user id"], "Invalid input. Please use buttons.");
-            await this.activateReminder(reminder[0], `Time to ${reminder[0].event}!`);
         }
+
+        if (acceptOrSnooze.toLowerCase().trim() === "snooze") {
+            return (this.snoozeReminder(dbReminderId));
+        }
+
+        const reminder = await reminderDB.find({id: dbReminderId});
+
+        await Utils.sendMessage(null, data["messenger user id"], "Invalid input. Please use buttons.");
+        await this.activateReminder(reminder[0], `Time to ${reminder[0].event}!`);
     }
 
     async snoozeReminder(DBReminderID) {
