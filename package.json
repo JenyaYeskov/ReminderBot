@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/JenyaYeskov/ReminderBot/issues"
   },
-  "homepage": "https://github.com/JenyaYeskov/ReminderBot#readme",
+  "homepage": "https://github.com/JenyaYeskov/ReminderBot",
   "dependencies": {
     "axios": "^0.25.0",
     "body-parser": "^1.19.1",
