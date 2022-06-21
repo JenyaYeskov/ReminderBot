@@ -3,7 +3,7 @@ import reminderDB from "../models/mongoWithMongoose.js";
 import controlService from "../models/controlService.js";
 import reminderService from "../models/reminderService.js";
 
-describe("", () => {
+describe("controlService test", () => {
     jest.setTimeout(10000);
 
     jest.useFakeTimers();
