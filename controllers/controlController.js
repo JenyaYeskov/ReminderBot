@@ -15,6 +15,10 @@ export const controlController = {
     stop: (req, res) => {
         controlService.stop();
 
-        res.send("stopped")
+            console.log(result);
+            res.send(result);
+        } catch (e) {
+            next(e);
+        }
     }
 }
