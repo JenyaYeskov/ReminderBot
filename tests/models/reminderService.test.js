@@ -1,5 +1,5 @@
 import reminderService from "../../models/reminderService.js";
-import reminderDB from "../../models/mongoDbWithMongoose.js";
+import reminderDB from "../../models/mongoWithMongoose.js";
 import {jest} from '@jest/globals';
 
 let reminderInfo = {

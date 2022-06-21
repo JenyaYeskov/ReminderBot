@@ -1,5 +1,5 @@
 import {jest} from '@jest/globals';
-import reminderDB from "../models/mongoDbWithMongoose.js";
+import reminderDB from "../models/mongoWithMongoose.js";
 import controlService from "../models/controlService.js";
 import reminderService from "../models/reminderService.js";
 

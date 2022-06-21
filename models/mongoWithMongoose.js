@@ -1,6 +1,6 @@
 import Reminder from "./reminderSchema.js";
 
-class mongoDbWithMongoose {
+class mongoWithMongoose {
     async find(data) {
         return Reminder.find(data).lean();
     }
@@ -29,4 +29,4 @@ class mongoDbWithMongoose {
     }
 }
 
-export default new mongoDbWithMongoose();
+export default new mongoWithMongoose();

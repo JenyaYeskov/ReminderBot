@@ -1,5 +1,5 @@
 import "dotenv/config";
-import reminderDB from "./mongoDbWithMongoose.js";
+import reminderDB from "./mongoWithMongoose.js";
 import Utils from "./reminderUtils.js";
 import ApiError from "../Errors/apiError.js";
 
