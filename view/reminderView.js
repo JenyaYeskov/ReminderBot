@@ -1,5 +1,6 @@
 class reminderView {
     showResponse(data) {
+
         if (Array.isArray(data)) {
             let response = [];
 
@@ -8,9 +9,13 @@ class reminderView {
             }
 
             return response
-        } else if (typeof data === "string") {
+        }
+
+        if (typeof data === "string") {
             return [{"text": data}]
-        } else if (typeof data === "object") {
+        }
+
+        if (typeof data === "object") {
             return [{"text": `Done. Reminder "${data.event}" with id: ${data.userReminderId} ${data.message}`}]
         }
     }
