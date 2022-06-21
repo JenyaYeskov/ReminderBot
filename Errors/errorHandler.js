@@ -24,6 +24,7 @@ export default function handle(err, req, res, next) {
 
 }
 
+//Chatfuel doesn't show responses with error status codes, so an OK status is required to display an error message.
 function adjustStatus(req, res) {
     if (req.headers["user-agent"] && req.headers["user-agent"].toLowerCase().trim() === "chatfuel") {
         res.status(200);
