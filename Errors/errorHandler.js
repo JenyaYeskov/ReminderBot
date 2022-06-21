@@ -11,6 +11,7 @@ export default function handle(err, req, res, next) {
         }
 
         console.error(err);
+
         res.status(500);
         adjustStatus(req, res);
 
