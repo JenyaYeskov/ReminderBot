@@ -9,9 +9,9 @@ export class MongooseConnection extends DB {
     }
 
     async connect() {
-        try {
-            applyHooks(mongoose.connection, this)
+        applyHooks(mongoose.connection, this);
 
+        try {
             if (!this.connection) {
                 this.connection = await mongoose.connect(this.uri);
             }
