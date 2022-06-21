@@ -3,6 +3,8 @@ import reminderService from "./reminderService.js";
 let interval;
 
 class controlService {
+
+    //Runs reminders time check once per minute (unless another interval is set).
     start(time = 60000) {
 
         clearInterval(interval);
@@ -14,10 +16,10 @@ class controlService {
         return ("started");
     }
 
+    //Stops reminders time check.
     stop() {
         clearInterval(interval);
 
-        console.log("stopped");
         return ("stopped");
     }
 }
