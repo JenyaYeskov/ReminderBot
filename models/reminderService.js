@@ -83,8 +83,7 @@ class ReminderService {
 
             for (const reminder of reminders) {
                 if (reminder.time <= new Date()) {
-                    console.log("gskjgd");
-                    return await this.activateReminder(reminder, `Hello! qweTime to ${reminder.event}!`)
+                    return await this.activateReminder(reminder, `Hello! Time to ${reminder.event}!`)
                 }
             }
         } catch (e) {
