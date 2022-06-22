@@ -112,7 +112,7 @@ class ReminderService {
         const reminder = await reminderDB.find({id: dbReminderId});
 
         await Utils.sendMessage(null, data["messenger user id"], "Invalid input. Please use buttons.");
-        await this.activateReminder(reminder[0], `Time to ${reminder[0].event}!`);
+        await this.activateReminder(reminder[0], `qwerTime to ${reminder[0].event}!`);
     }
 
     //snoozes a reminder by adding 10 min. to its time.
