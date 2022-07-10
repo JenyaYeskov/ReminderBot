@@ -111,7 +111,20 @@ class postgres {
     }
 
     async findByIdAndUpdate(id, data) {
+        let connection = await getConnection();
 
+        try {
+            await connection.connect();
+
+            let rems = await connection.query(`UPDATE reminders SET "time" = $1 WHERE "id" = $2 RETURNING *`, [data.time, id]);
+
+            return rems.rows[0];
+
+        } catch (e) {
+            throw e;
+        } finally {
+            await connection.end();
+        }
     }
 }
 
