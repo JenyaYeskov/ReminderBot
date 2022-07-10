@@ -57,6 +57,22 @@ class postgres {
         try {
             await connection.connect();
 
+            if (data.id) {
+                let result = await connection.query(`DELETE FROM reminders WHERE "id" = $1 RETURNING *`, [data.id]);
+
+                return result.rows[0];
+            }
+
+            let result = await connection.query(`DELETE FROM reminders WHERE "messenger user id" = $1 AND "userReminderId" = $2 RETURNING *`,
+                [data["messenger user id"], data.userReminderId]);
+
+            return result.rows[0];
+
+        } catch (e) {
+            throw e;
+        } finally {
+            await connection.end();
+        }
     }
 
     async deleteMany(data) {
