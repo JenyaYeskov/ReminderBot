@@ -52,6 +52,10 @@ class postgres {
     }
 
     async findOneAndDelete(data) {
+        let connection = await getConnection();
+
+        try {
+            await connection.connect();
 
     }
 
