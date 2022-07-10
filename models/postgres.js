@@ -13,6 +13,20 @@ async function getConnection() {
 class postgres {
 
     async find(data) {
+        let connection = await getConnection();
+
+        try {
+            await connection.connect();
+
+            let result = await connection.query(`SELECT * FROM reminders WHERE "messenger user id" = $1`, [data["messenger user id"]]);
+
+            return result.rows;
+
+        } catch (e) {
+            throw e;
+        } finally {
+            await connection.end();
+        }
     }
 
     async createNew(data) {
