@@ -6,6 +6,9 @@ const clientClass = pg.Client;
 
 // const client = new clientClass("postgres://gmlatebk:wlTVetyD86nERrzISLsDEFE9cSAVio0Q@abul.db.elephantsql.com/gmlatebk");
 
+async function getConnection() {
+    return new clientClass("postgres://gmlatebk:wlTVetyD86nERrzISLsDEFE9cSAVio0Q@abul.db.elephantsql.com/gmlatebk")
+}
 
 class postgres {
 
