@@ -30,6 +30,25 @@ class postgres {
     }
 
     async createNew(data) {
+        let connection = await getConnection();
+        let {dateInput, timeInput, event, time, userReminderId} = data;
+        let uid = data["messenger user id"];
+
+        try {
+            await connection.connect();
+
+            let result = await connection.query(
+                `INSERT INTO reminders ("dateInput", "timeInput", event, time, "userReminderId", "messenger user id") 
+                 VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+                [dateInput, timeInput, event, time, userReminderId, uid]);
+
+            return result.rows[0];
+
+        } catch (e) {
+            throw e;
+        } finally {
+            await connection.end();
+        }
     }
 
     async findOneAndDelete(data) {
