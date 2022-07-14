@@ -83,7 +83,7 @@ class ReminderService {
 
             for (const reminder of reminders) {
                 if (reminder.time <= new Date()) {
-                    this.activateReminder(reminder, `Hello! Time to ${reminder.event}!`)
+                    await this.activateReminder(reminder, `Hello! Time to ${reminder.event}!`)
                 }
             }
         } catch (e) {
@@ -93,7 +93,9 @@ class ReminderService {
 
     //Activates reminder by sending its data to certain chatfuel block.
     async activateReminder(reminder, message) {
-        let url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${reminder["messenger user id"]}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Reminder_activation_flow&event=${message}&dbReminderId=${reminder._id.toString()}`;
+        const id = (reminder._id || reminder.id).toString();  //Needed for different DBs compatibility
+
+        const url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${reminder["messenger user id"]}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Reminder_activation_flow&event=${message}&dbReminderId=${id}`;
 
         return Utils.sendMessage(url);
     }
