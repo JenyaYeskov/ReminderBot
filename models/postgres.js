@@ -13,6 +13,21 @@ async function getConnection() {
 
 class postgres {
 
+    async doRequest(query, queryData) {
+        const connection = await getConnection();
+
+        try {
+            await connection.connect();
+
+            return queryData ? await connection.query(query, [...queryData]) : await connection.query(query);
+
+        } catch (e) {
+            throw e;
+        } finally {
+            await connection.end();
+        }
+    }
+
     async find(data) {
         let connection = await getConnection();
 
