@@ -75,20 +75,10 @@ class postgres {
     }
 
     async getAll() {
-        let connection = await getConnection();
 
-        try {
-            await connection.connect();
+        const result = await this.doRequest(`SELECT * FROM reminders`);
 
-            let rems = await connection.query(`SELECT * FROM reminders`);
-
-            return rems.rows;
-
-        } catch (e) {
-            throw e;
-        } finally {
-            await connection.end();
-        }
+        return result.rows;
     }
 
     async findByIdAndUpdate(id, data) {
