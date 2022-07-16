@@ -4,7 +4,11 @@ import "dotenv/config"
 const clientClass = pg.Client;
 
 async function getConnection() {
-    return new clientClass(process.env.POSTGRES_URL)
+    try {
+        return new clientClass(process.env.POSTGRES_URL);
+    } catch (e) {
+        throw e;
+    }
 }
 
 class postgres {
