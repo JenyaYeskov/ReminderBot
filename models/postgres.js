@@ -29,20 +29,11 @@ class postgres {
     }
 
     async find(data) {
-        let connection = await getConnection();
+        const queryString = `SELECT * FROM reminders WHERE "messenger user id" = $1`;
 
-        try {
-            await connection.connect();
+        let result = await this.doRequest(queryString, [data["messenger user id"]]);
 
-            let result = await connection.query(`SELECT * FROM reminders WHERE "messenger user id" = $1`, [data["messenger user id"]]);
-
-            return result.rows;
-
-        } catch (e) {
-            throw e;
-        } finally {
-            await connection.end();
-        }
+        return result.rows;
     }
 
     async createNew(data) {
