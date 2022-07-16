@@ -49,27 +49,21 @@ class postgres {
     }
 
     async findOneAndDelete(data) {
-        let connection = await getConnection();
+        let queryString;
 
-        try {
-            await connection.connect();
+        if (data.id) {
+            queryString = `DELETE FROM reminders WHERE "id" = $1 RETURNING *`;
 
-            if (data.id) {
-                let result = await connection.query(`DELETE FROM reminders WHERE "id" = $1 RETURNING *`, [data.id]);
-
-                return result.rows[0];
-            }
-
-            let result = await connection.query(`DELETE FROM reminders WHERE "messenger user id" = $1 AND "userReminderId" = $2 RETURNING *`,
-                [data["messenger user id"], data.userReminderId]);
+            const result = await this.doRequest(queryString, [data.id]);
 
             return result.rows[0];
-
-        } catch (e) {
-            throw e;
-        } finally {
-            await connection.end();
         }
+
+        queryString = `DELETE FROM reminders WHERE "messenger user id" = $1 AND "userReminderId" = $2 RETURNING *`;
+
+        const result = await this.doRequest(queryString, [data["messenger user id"], data.userReminderId]);
+
+        return result.rows[0];
     }
 
     async deleteMany(data) {
