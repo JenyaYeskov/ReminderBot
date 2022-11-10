@@ -8,7 +8,7 @@ const mongoConnection = new MongooseConnection("mongo connection 1", process.env
 app.listen(port, () => console.log("Server is running"));
 
 try {
-    await mongoConnection.connect();
+    mongoConnection.connect();
 } catch (e) {
     console.error(e);
 }

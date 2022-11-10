@@ -21,19 +21,19 @@ class ReminderController {
         }
     }
 
-    async getReminders(req, res, next) {
+    getReminders(req, res, next) {
         return this.handleRequest(reminderService.getReminders, req, res, next);
     }
 
-    async createReminder(req, res, next) {
+    createReminder(req, res, next) {
         return this.handleRequest(reminderService.createReminder, req, res, next);
     }
 
-    async deleteReminder(req, res, next) {
+    deleteReminder(req, res, next) {
         return this.handleRequest(reminderService.deleteReminder, req, res, next);
     }
 
-    async acceptOrSnoozeReminder(req, res, next) {
+    acceptOrSnoozeReminder(req, res, next) {
         return this.handleRequest(reminderService.acceptOrSnoozeReminder.bind(reminderService), req, res, next);
     }
 }

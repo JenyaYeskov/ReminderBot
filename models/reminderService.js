@@ -29,7 +29,7 @@ class ReminderService {
 
     async createReminder(data) {
         data.userReminderId = await Utils.getNewId(data["messenger user id"]);
-        data.time = await Utils.getReminderTime(data.dateInput.trim(), data.timeInput.trim(), data.timezone);
+        data.time = Utils.getReminderTime(data.dateInput.trim(), data.timeInput.trim(), data.timezone);
 
         if (data.time < new Date()) {
             throw new ApiError(400, "Sorry, can't remind you of something from the past.")

@@ -16,8 +16,8 @@ class ReminderUtils {
         'DD.M.YYYY HH.m', 'D.M.YYYY HH.m', 'DD.M.YYYY H.m', 'D.M.YYYY H.m', 'DD.M.YY HH.m',
         'D.M.YY HH.m', 'DD.M.YY H.m', 'D.M.YY H.m'];
 
-    //Parses date and time input into a Date object with a timezone offset.
-    async getReminderTime(date, time, offset) {
+    // Parses date and time input into a Date object with a timezone offset.
+    getReminderTime(date, time, offset) {
         let result;
 
         for (const pattern of this.dateAndTimePatterns) {
