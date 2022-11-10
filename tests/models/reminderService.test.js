@@ -2,17 +2,18 @@ import reminderService from "../../models/reminderService.js";
 import reminderDB from "../../models/mongoWithMongoose.js";
 import {jest} from '@jest/globals';
 
-let reminderInfo = {
-    "dateInput": "23.03.22",
-    "messenger user id": process.env.fbMessengerId,
-    "timeInput": "05.10",
-    "timezone": "2",
-    "event": "do something"
-}
-let inf = {
-    "messenger user id": process.env.fbMessengerId,
-    "amount": "all"
-};
+// let reminderInfo = {
+//     "dateInput": "23.03.22",
+//     "messenger user id": process.env.fbMessengerId,
+//     "timeInput": "05.10",
+//     "timezone": "2",
+//     "event": "do something"
+// }
+//
+// let inf = {
+//     "messenger user id": process.env.fbMessengerId,
+//     "amount": "all"
+// };
 
 describe("Reminder service tests", () => {
     describe("acceptOrSnooze method test", () => {

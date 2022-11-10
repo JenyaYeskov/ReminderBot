@@ -11,6 +11,7 @@ let reminderInfo = {
     "timezone": "3",
     "event": "do something"
 }
+
 let today = new Date();
 today.setSeconds(0, 0);
 

@@ -2,8 +2,8 @@ import controlService from "../models/controlService.js";
 
 export const controlController = {
 
-    //Starts tracking the time of reminders
-    start: (req, res, next) => {
+    //Starts reminders time tracking
+    start(req, res, next) {
         try {
             let result = controlService.start();
 
@@ -14,8 +14,8 @@ export const controlController = {
         }
     },
 
-    //Stops tracking the time of reminders
-    stop: (req, res, next) => {
+    //Stops reminders time tracking
+    stop(req, res, next) {
         try {
             let result = controlService.stop();
 

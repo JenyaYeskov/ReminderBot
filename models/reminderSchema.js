@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const ReminderSchema = new mongoose.Schema({
 
-    //Short id of reminder for user.
+    // Id of the reminder for user.
     userReminderId: Number,
     "messenger user id": {
         type: String,

@@ -21,7 +21,6 @@ export default function handle(err, req, res, next) {
         console.error(e);
         res.status(500).end("Something went wrong");
     }
-
 }
 
 //Chatfuel doesn't show responses with error status codes, so an OK status is required to display an error message.

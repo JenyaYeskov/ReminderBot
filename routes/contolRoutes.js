@@ -1,7 +1,7 @@
 import express from "express";
-const router = express.Router();
 import {controlController} from "../controllers/controlController.js";
 
+const router = express.Router();
 
 router.get('/start', controlController.start);
 

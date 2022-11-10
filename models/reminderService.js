@@ -1,5 +1,6 @@
 import "dotenv/config";
 import reminderDB from "./mongoWithMongoose.js";
+// import reminderDB from "./postgres.js";
 import Utils from "./reminderUtils.js";
 import ApiError from "../Errors/apiError.js";
 
@@ -13,7 +14,7 @@ class ReminderService {
             let reminders = await reminderDB.find({"messenger user id": data["messenger user id"]});
             reminders = reminders.filter((reminder) => Utils.isToday(reminder.time));
 
-            return Utils.whetherRemindersFound(reminders, "You have no reminders for today.")
+            return Utils.whetherRemindersFound(reminders, "You have no reminders for today.");
         }
 
         if (amount === "all") {

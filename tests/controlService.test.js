@@ -7,6 +7,7 @@ describe("controlService test", () => {
     jest.setTimeout(10000);
 
     jest.useFakeTimers();
+
     it('should check if reminders time has come', async () => {
 
         let now = new Date();
