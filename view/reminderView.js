@@ -1,4 +1,4 @@
-class reminderView {
+class ReminderView {
     showResponse(data) {
 
         if (Array.isArray(data)) {
@@ -21,4 +21,4 @@ class reminderView {
     }
 }
 
-export default new reminderView();
+export default new ReminderView();

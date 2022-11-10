@@ -2,7 +2,7 @@ import reminderService from "./reminderService.js";
 
 let interval;
 
-class controlService {
+class ControlService {
 
     //Runs reminders time check once per minute (unless another interval is set).
     start(time = 60000) {
@@ -28,5 +28,5 @@ class controlService {
     }
 }
 
-export default new controlService();
+export default new ControlService();
 
