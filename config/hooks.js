@@ -11,6 +11,6 @@ export function applyHooks(db, connection) {
             });
         });
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 }
