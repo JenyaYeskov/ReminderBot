@@ -91,7 +91,11 @@ class ReminderService {
 
     //Activates reminder by sending its data to certain chatfuel block.
     async activateReminder(reminder, message) {
-        let url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${reminder["messenger user id"]}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Reminder_activation_flow&event=${message}&dbReminderId=${reminder._id.toString()}`;
+
+        // Needed for different DBs compatibility
+        const id = (reminder._id || reminder.id).toString();
+
+        const url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${reminder["messenger user id"]}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Reminder_activation_flow&event=${message}&dbReminderId=${id}`;
 
         return Utils.sendMessage(url);
     }
