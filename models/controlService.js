@@ -10,7 +10,11 @@ class controlService {
         clearInterval(interval);
 
         interval = setInterval(async () => {
-            await reminderService.checkReminder();
+            try {
+                await reminderService.checkReminder();
+            } catch (e) {
+                console.error(e);
+            }
         }, time);
 
         return ("started");
