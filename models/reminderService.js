@@ -12,7 +12,7 @@ class ReminderService {
         if (amount === "today's" || amount === "todays" || amount === "today") {
 
             let reminders = await reminderDB.find({"messenger user id": data["messenger user id"]});
-            reminders = reminders.filter((reminder) => Utils.isToday(reminder.time));
+            reminders = reminders.filter(reminder => Utils.isToday(reminder.time));
 
             return Utils.whetherRemindersFound(reminders, "You have no reminders for today.");
         }
@@ -45,14 +45,15 @@ class ReminderService {
     async deleteReminder(data) {
         const amount = data.amount.toLowerCase().trim();
 
-        //Deleting single reminder
+        // Deleting single reminder
         if (amount === ("one" || 1) && !isNaN(data.userReminderId)) {
             let deleted = await reminderDB.findOneAndDelete({
                 userReminderId: data.userReminderId,
                 "messenger user id": data["messenger user id"]
             });
 
-            let result = Utils.whetherRemindersFound([deleted], `You have no reminders with id ${data.userReminderId}`);
+            let result = Utils.whetherRemindersFound([deleted],
+                `You have no reminders with id ${data.userReminderId}`);
 
             if (Array.isArray(result)) {
                 result = result[0];
@@ -63,7 +64,7 @@ class ReminderService {
             return result;
         }
 
-        //Deleting multiple reminders
+        // Deleting multiple reminders
         if (amount === "all") {
             let deleted = await reminderDB.deleteMany({"messenger user id": data["messenger user id"]});
 
@@ -77,7 +78,7 @@ class ReminderService {
         throw new ApiError(400, "Invalid input.")
     }
 
-    //Checks if reminder's time has come, and if so - activates the reminder.
+    // Checks if reminder's time has come, and if so - activates(sends to user) the reminder.
     async checkReminder() {
         const reminders = await reminderDB.getAll();
 
@@ -90,7 +91,7 @@ class ReminderService {
         }
     }
 
-    //Activates reminder by sending its data to certain chatfuel block.
+    // Activates reminder by sending its data to certain chatfuel block.
     async activateReminder(reminder, message) {
 
         // Needed for different DBs compatibility
@@ -118,7 +119,7 @@ class ReminderService {
         await this.activateReminder(reminder[0], `Time to ${reminder[0].event}!`);
     }
 
-    //snoozes a reminder by adding 10 min. to its time.
+    // Snoozes a reminder by adding 10 min. to its time.
     async snoozeReminder(DBReminderID) {
         const newTime = new Date();
         newTime.setMinutes(newTime.getMinutes() + 10);

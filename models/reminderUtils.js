@@ -7,7 +7,8 @@ import two_digit_year from "date-and-time/plugin/two-digit-year";
 DateAndTime.plugin(two_digit_year);
 
 class ReminderUtils {
-    //Patterns for parsing different variants of date and time input.
+
+    // Patterns for parsing different variants of date and time input.
     dateAndTimePatterns = ['DD.MM.YYYY HH.mm', 'D.MM.YYYY HH.mm', 'DD.MM.YYYY H.mm',
         'D.MM.YYYY H.mm', 'DD.MM.YY HH.mm', 'D.MM.YY HH.mm', 'DD.MM.YY H.mm', 'D.MM.YY H.mm',
         'DD.M.YYYY HH.mm', 'D.M.YYYY HH.mm', 'DD.M.YYYY H.mm', 'D.M.YYYY H.mm', 'DD.M.YY HH.mm',
@@ -35,7 +36,7 @@ class ReminderUtils {
         throw new ApiError(400, "Wrong date or time.")
     }
 
-    //Formatting offset before parsing.
+    // Formatting offset before parsing.
     formatOffset(offset) {
         const separators = [".", ":", "/"];
 
@@ -68,7 +69,7 @@ class ReminderUtils {
     async getNewId(messengerId) {
         let reminders = await reminderService.getReminders({"messenger user id": messengerId, amount: "all"});
         reminders = Array.from(reminders)
-        const existingIDs = reminders.map((reminder) => reminder.userReminderId);
+        const existingIDs = reminders.map(reminder => reminder.userReminderId);
 
         let id = 1;
 
@@ -83,7 +84,7 @@ class ReminderUtils {
         return DateAndTime.isSameDay(new Date(), day);
     }
 
-    //Checks reminders presence in the given array, and returns reminders or given message.
+    // Checks reminders presence in the given array, and returns reminders or given message.
     whetherRemindersFound(reminders, message) {
         if (reminders[0]) {
             return reminders;
@@ -92,7 +93,7 @@ class ReminderUtils {
         return message
     }
 
-    //Makes axios request to the given url of chatfuel block, or to the default message block, if no url is given.
+    // Makes axios request to the given url of chatfuel block, or to the default message block, if no url is given.
     async sendMessage(url, user, message) {
         if (!url) {
             url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${user}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Message&message=${message}`
