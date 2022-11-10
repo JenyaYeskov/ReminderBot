@@ -78,16 +78,14 @@ class ReminderService {
 
     //Checks if reminder's time has come, and if so - activates the reminder.
     async checkReminder() {
-        try {
-            const reminders = await reminderDB.getAll();
+        const reminders = await reminderDB.getAll();
 
-            for (const reminder of reminders) {
-                if (reminder.time <= new Date()) {
-                    this.activateReminder(reminder, `Hello! Time to ${reminder.event}!`)
-                }
+        for (const reminder of reminders) {
+
+            if (reminder.time <= new Date()) {
+                this.activateReminder(reminder, `Hello! Time to ${reminder.event}!`)
+                    .catch(err => console.error(err));
             }
-        } catch (e) {
-            console.error(e);
         }
     }
 
