@@ -34,7 +34,7 @@ describe("Reminder service tests", () => {
 
         it('should add 10 minutes to reminders time, when reminder is snoozed', async function () {
             reminderDB.findByIdAndUpdate = jest.fn((id, data) => {
-                return {"event": "get up"}
+                return {"event": "get up"};
             });
 
             const response = await reminderService.acceptOrSnoozeReminder({
@@ -47,7 +47,7 @@ describe("Reminder service tests", () => {
 
             expect(reminderDB.findByIdAndUpdate).toBeCalledWith(expect.any(String), {time: expect.any(Date)});
             expect(reminderDB.findByIdAndUpdate.mock.calls[0][1].time.toUTCString()).toEqual(time.toUTCString());
-            expect(response).toBe(`Done. Reminder "get up" will show up in 10 minutes.`)
+            expect(response).toBe(`Done. Reminder "get up" will show up in 10 minutes.`);
         });
     })
 })

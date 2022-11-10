@@ -24,7 +24,7 @@ class ReminderService {
             return Utils.whetherRemindersFound(reminders, "You have no reminders.");
         }
 
-        throw new ApiError(400, "Invalid input.")
+        throw new ApiError(400, "Invalid input.");
     }
 
     async createReminder(data) {
@@ -32,12 +32,12 @@ class ReminderService {
         data.time = Utils.getReminderTime(data.dateInput.trim(), data.timeInput.trim(), data.timezone);
 
         if (data.time < new Date()) {
-            throw new ApiError(400, "Sorry, can't remind you of something from the past.")
+            throw new ApiError(400, "Sorry, can't remind you of something from the past.");
         }
 
         const result = await reminderDB.createNew(data);
         result.statusCode = 201;
-        result.message = "was created."
+        result.message = "was created.";
 
         return result;
     }
@@ -72,10 +72,10 @@ class ReminderService {
                 return `Deleted ${deleted.deletedCount} reminder(s). All your reminders have been deleted.`;
             }
 
-            return `You have no reminders.`
+            return `You have no reminders.`;
         }
 
-        throw new ApiError(400, "Invalid input.")
+        throw new ApiError(400, "Invalid input.");
     }
 
     // Checks if reminder's time has come, and if so - activates(sends to user) the reminder.

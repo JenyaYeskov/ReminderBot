@@ -33,7 +33,7 @@ class ReminderUtils {
             return result;
         }
 
-        throw new ApiError(400, "Wrong date or time.")
+        throw new ApiError(400, "Wrong date or time.");
     }
 
     // Formatting offset before parsing.
@@ -90,13 +90,13 @@ class ReminderUtils {
             return reminders;
         }
 
-        return message
+        return message;
     }
 
     // Makes axios request to the given url of chatfuel block, or to the default message block, if no url is given.
     async sendMessage(url, user, message) {
         if (!url) {
-            url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${user}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Message&message=${message}`
+            url = `https://api.chatfuel.com/bots/${process.env.chatfuelBotId}/users/${user}/send?chatfuel_token=${process.env.chatfuel_token}&chatfuel_flow_name=Message&message=${message}`;
         }
 
         return axios({

@@ -16,7 +16,7 @@ let today = new Date();
 today.setSeconds(0, 0);
 
 let future = new Date(today.getFullYear(), today.getMonth() + 1, 15, 12, 30);
-future.setUTCHours(9)
+future.setUTCHours(9);
 
 reminderInfo.dateInput = `${future.getDate()}.${future.getMonth() + 1}.${future.getFullYear()}`;
 
@@ -32,12 +32,12 @@ beforeAll(async () => {
 
 beforeEach(async () => {
     await mongoose.connection.db.dropDatabase();
-    responseTemplate = [{"text": ""}]
+    responseTemplate = [{"text": ""}];
 })
 
 afterAll(async () => {
     await mongoose.connection.db.dropDatabase();
-    await mongoose.connection.close()
+    await mongoose.connection.close();
 })
 
 describe("Reminder routes testing", () => {
@@ -45,7 +45,7 @@ describe("Reminder routes testing", () => {
     describe("/reminders/addRem route tests", () => {
 
         it("should return status code 201", async () => {
-            const response = await supertest(app).post("/reminders/addRem").send(reminderInfo)
+            const response = await supertest(app).post("/reminders/addRem").send(reminderInfo);
 
             expect(response.statusCode).toBe(201);
         })
@@ -72,23 +72,23 @@ describe("Reminder routes testing", () => {
 
         it("should return status code 400 and an error message when date input is wrong", async () => {
             let wrongDate = Object.assign({}, reminderInfo);
-            wrongDate.dateInput = "wrong input"
+            wrongDate.dateInput = "wrong input";
 
-            const response = await supertest(app).post("/reminders/addRem").send(wrongDate)
+            const response = await supertest(app).post("/reminders/addRem").send(wrongDate);
 
             expect(response.statusCode).toBe(400);
-            responseTemplate[0].text = "Wrong date or time."
+            responseTemplate[0].text = "Wrong date or time.";
             expect(response.body).toEqual(responseTemplate);
         })
 
         it("should return status code 400 and an error message when time input is wrong", async () => {
             let wrongTime = Object.assign({}, reminderInfo);
-            wrongTime.timeInput = "wrong input"
+            wrongTime.timeInput = "wrong input";
 
-            const response = await supertest(app).post("/reminders/addRem").send(wrongTime)
+            const response = await supertest(app).post("/reminders/addRem").send(wrongTime);
 
             expect(response.statusCode).toBe(400);
-            responseTemplate[0].text = "Wrong date or time."
+            responseTemplate[0].text = "Wrong date or time.";
             expect(response.body).toEqual(responseTemplate);
         })
 
@@ -96,15 +96,15 @@ describe("Reminder routes testing", () => {
             let past = Object.assign({}, reminderInfo);
             past.dateInput = `${today.getDate()}.${today.getMonth() - 1}.${today.getFullYear()}`;
 
-            const response = await supertest(app).post("/reminders/addRem").send(past)
+            const response = await supertest(app).post("/reminders/addRem").send(past);
 
             expect(response.statusCode).toBe(400);
-            responseTemplate[0].text = "Sorry, can't remind you of something from the past."
+            responseTemplate[0].text = "Sorry, can't remind you of something from the past.";
             expect(response.body).toEqual(responseTemplate);
         })
 
         it.skip("should return status code 500 and a server error message when no required info provided", async () => {
-            const response = await supertest(app).post("/reminders/addRem").send()
+            const response = await supertest(app).post("/reminders/addRem").send();
 
             expect(response.statusCode).toBe(500);
             expect(response.text).toBe("Something went wrong, please try again.");
@@ -117,7 +117,7 @@ describe("Reminder routes testing", () => {
             const response = await supertest(app).post("/reminders/getRems").send({
                 "amount": "all",
                 "messenger user id": process.env.fbMessengerId
-            })
+            });
 
             expect(response.statusCode).toBe(200);
         });
@@ -131,7 +131,7 @@ describe("Reminder routes testing", () => {
             const response = await supertest(app).post("/reminders/getRems").send({
                 "amount": "all",
                 "messenger user id": process.env.fbMessengerId
-            })
+            });
 
             expect(response.body.length).toBe(3);
 
@@ -171,14 +171,14 @@ describe("Reminder routes testing", () => {
             const response = await supertest(app).post("/reminders/getRems").send({
                 "amount": "todays",
                 "messenger user id": process.env.fbMessengerId
-            })
+            });
 
             expect(response.body.length).toBe(3);
 
-            let id = 0
-            let checkDate = new Date(today)
+            let id = 0;
+            let checkDate = new Date(today);
             checkDate.setHours(23);
-            checkDate.setMinutes(59)
+            checkDate.setMinutes(59);
 
             for (let i = 0; i < response.body.length; i++) {
                 id += 2;
@@ -207,7 +207,7 @@ describe("Reminder routes testing", () => {
             const response = await supertest(app).post("/reminders/getRems").send({
                 "amount": "wrong input",
                 "messenger user id": process.env.fbMessengerId
-            })
+            });
 
             expect(response.statusCode).toBe(400);
             responseTemplate[0].text = "Invalid input.";
@@ -215,7 +215,7 @@ describe("Reminder routes testing", () => {
         })
 
         it.skip("should return status code 500 and a server error message when no required info provided", async () => {
-            const response = await supertest(app).post("/reminders/addRem").send()
+            const response = await supertest(app).post("/reminders/addRem").send();
 
             expect(response.statusCode).toBe(500);
             expect(response.text).toBe("Something went wrong, please try again.");
@@ -233,7 +233,7 @@ describe("Reminder routes testing", () => {
             let response = await supertest(app).post("/reminders/delete").send({
                 "messenger user id": process.env.fbMessengerId,
                 "amount": "all"
-            })
+            });
 
             expect(response.statusCode).toBe(200);
 
@@ -243,7 +243,7 @@ describe("Reminder routes testing", () => {
             response = await supertest(app).post("/reminders/getRems").send({
                 "amount": "all",
                 "messenger user id": process.env.fbMessengerId
-            })
+            });
 
             responseTemplate[0].text = "You have no reminders.";
             expect(response.body).toEqual(responseTemplate);
@@ -259,7 +259,7 @@ describe("Reminder routes testing", () => {
                 "userReminderId": "2",
                 "messenger user id": process.env.fbMessengerId,
                 "amount": "one"
-            })
+            });
 
             responseTemplate[0].text = `Done. Reminder "${reminderInfo.event}" with id: 2 was deleted.`;
             expect(response.body).toEqual(responseTemplate);
@@ -267,9 +267,9 @@ describe("Reminder routes testing", () => {
             response = await supertest(app).post("/reminders/getRems").send({
                 "amount": "all",
                 "messenger user id": process.env.fbMessengerId
-            })
+            });
 
-            expect(response.body.length).toBe(2)
+            expect(response.body.length).toBe(2);
 
             for (const reminder of response.body) {
                 expect(response.userReminderId).not.toBe(2);
@@ -280,9 +280,9 @@ describe("Reminder routes testing", () => {
             let response = await supertest(app).post("/reminders/delete").send({
                 "messenger user id": process.env.fbMessengerId,
                 "amount": "wrong input"
-            })
+            });
 
-            responseTemplate[0].text = "Invalid input."
+            responseTemplate[0].text = "Invalid input.";
             expect(response.statusCode).toBe(400);
             expect(response.body).toEqual(responseTemplate);
         })
@@ -292,15 +292,15 @@ describe("Reminder routes testing", () => {
                 "userReminderId": "wrong input",
                 "messenger user id": process.env.fbMessengerId,
                 "amount": "one"
-            })
+            });
 
-            responseTemplate[0].text = "Invalid input."
+            responseTemplate[0].text = "Invalid input.";
             expect(response.statusCode).toBe(400);
             expect(response.body).toEqual(responseTemplate);
         })
 
         it.skip("should return status code 500 and a server error message when no required info provided", async () => {
-            const response = await supertest(app).post("/reminders/addRem").send()
+            const response = await supertest(app).post("/reminders/addRem").send();
 
             expect(response.statusCode).toBe(500);
             expect(response.text).toBe("Something went wrong, please try again.");
@@ -310,7 +310,7 @@ describe("Reminder routes testing", () => {
     describe("Wrong path test", () => {
         it("should return 404 status and 'not found' message when the pah is unknown", async () => {
             try {
-                const response = await supertest(app).get("/qwerty");
+                const response = supertest(app).get("/qwerty");
 
                 expect(response.status).toBe(404);
 
