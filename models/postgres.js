@@ -4,7 +4,7 @@ import "dotenv/config"
 const pool = new pg.Pool({connectionString: process.env.POSTGRES_URL});
 
 
-class postgres {
+class Postgres {
 
     async find(data) {
         const queryString = `SELECT * FROM reminders WHERE "messenger user id" = $1`;
@@ -67,4 +67,4 @@ class postgres {
     }
 }
 
-export default new postgres();
+export default new Postgres();
